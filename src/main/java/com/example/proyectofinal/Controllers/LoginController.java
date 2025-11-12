@@ -2,19 +2,16 @@ package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;
 
 public class LoginController {
     @FXML
-    private TextField txtUsername;
+    private TextField txtUser;
     @FXML
-    private TextField txtPassword;
+    private PasswordField txtPassword;
     @FXML
     private Button btnLogin;
     @FXML
@@ -24,8 +21,8 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userList.add(new User("alejandro2007", "123456"));
-        userList.add(new User("Dandro07", "FliaHenaoJ11"));
+        userList.add(new User("alejandro2007", "123456" , "Alejandro" , "a.henaojaramillo87@gmail.com" , "1119150996"));
+        userList.add(new User("Dandro07", "FliaHenaoJ11" , "David" , "davida.henaoj@uqvirtual.edu.co" , "1094909736"));
 
         btnLogin.setOnAction(e -> login());
         btnCancel.setOnAction(e -> cancel());
@@ -33,7 +30,7 @@ public class LoginController {
 
     @FXML
     private void login() {
-        String username = txtUsername.getText();
+        String username = txtUser.getText();
         String password = txtPassword.getText();
 
 
@@ -59,7 +56,7 @@ public class LoginController {
 
     @FXML
     private void cancel() {
-        txtUsername.clear();
+        txtUser.clear();
         txtPassword.clear();
     }
 
@@ -94,7 +91,7 @@ public class LoginController {
 
         Object evt = event.getSource();
 
-        if (evt.equals(txtUsername)) {
+        if (evt.equals(txtUser)) {
 
             if (event.getCharacter().equals(" ")) {
                 event.consume();

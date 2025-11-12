@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectofinal.Controllers.AdministratorController">
+   <children>
+      <AnchorPane prefWidth="669.0">
+         <children>
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+               <left>
+                  <VBox style="-fx-background-color: #468BB0; -fx-border-color: black;" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="134.0" prefWidth="178.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Bank UQ" textFill="#efefef">
+                                 <font>
+                                    <Font name="Baskerville Old Face" size="33.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="30.0" text="Administrator" textFill="#efefef">
+                                 <font>
+                                    <Font name="Bell MT" size="22.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="136.0" text="(Username)" textAlignment="CENTER" textFill="#f7f7f7">
+                                 <font>
+                                    <Font name="Arial Black" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <Button fx:id="btnCreateEmployee" alignment="CENTER" layoutX="21.0" layoutY="21.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="137.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 30;" text="Register employees" textFill="#fafafa">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="13.5" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnShowEmployee" alignment="CENTER" layoutX="21.0" layoutY="88.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="137.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Employees" textFill="#fafafa">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="13.5" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnLogOut" alignment="CENTER" layoutX="37.0" layoutY="206.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" style="-fx-border-radius: 20; -fx-background-color: #87220C; -fx-border-color: black; -fx-background-radius: 30;" text="Log out" textFill="#fafafa">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="13.5" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </left>
+               <center>
+                  <AnchorPane prefHeight="404.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox layoutX="134.0" layoutY="20.0" />
+                        <Label layoutX="149.0" layoutY="20.0" text="Choose an option">
+                           <font>
+                              <Font name="Arial Black" size="16.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </center>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</VBox>
