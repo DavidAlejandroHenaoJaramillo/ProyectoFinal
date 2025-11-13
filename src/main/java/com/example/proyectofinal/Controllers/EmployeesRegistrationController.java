@@ -4,12 +4,17 @@ import com.example.proyectofinal.Models.Cashier;
 import com.example.proyectofinal.Models.GestionUsuarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+
+import static java.util.Arrays.setAll;
 
 public class EmployeesRegistrationController {
     @FXML
@@ -24,6 +29,8 @@ public class EmployeesRegistrationController {
     private TextField txtWorkerId;
     @FXML
     private Button btnRegisterEmployee;
+    @FXML
+    private AnchorPane layoutAdmin;
 
     private GestionUsuarios gestor = new GestionUsuarios();
 
@@ -45,8 +52,9 @@ public class EmployeesRegistrationController {
         showAlertInformation("Success" , "Cashier registered successfully");
         clearFields();
     }
-    @FXML private void backLayoutCashier () {
-
+    @FXML private void backLayoutAdmin (ActionEvent event) throws IOException {
+        Parent previusView = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
+        layoutAdmin.getChildren().setAll(previusView);
     }
     private boolean validateFields(){
         if(txtIdEmployee.getText().trim().isEmpty() || txtPasswordEmployee.getText().trim().isEmpty()
@@ -96,13 +104,5 @@ public class EmployeesRegistrationController {
         alertError.setContentText(message);
         alertError.showAndWait();
     }
-
-
-
-
-
-
-
-
 
 }
