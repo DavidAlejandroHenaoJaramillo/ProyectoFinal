@@ -5,6 +5,7 @@ module com.example.proyectofinal {
     requires javafx.base;
 
 
+
     exports com.example.proyectofinal.App;
     opens com.example.proyectofinal.App to javafx.fxml;
 

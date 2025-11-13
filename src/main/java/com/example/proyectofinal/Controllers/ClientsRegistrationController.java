@@ -70,7 +70,7 @@ public class ClientsRegistrationController {
     }
 
 
-    private void clearFields(){
+    @FXML private void clearFields(){
         txtPasswordClient.clear();
         txtNameClient.clear();
         txtEmailClient.clear();

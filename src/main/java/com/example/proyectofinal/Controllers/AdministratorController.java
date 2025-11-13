@@ -22,20 +22,34 @@ public class AdministratorController {
     private Label usernameAdministrator;
 
     private Admin admin;
-    private GestionUsuarios gestionUsuarios;
+    private GestionUsuarios gestor;
 
 
-    @FXML private void showEmployeesRegister () throws IOException {
-        VBox viewEmployeesRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/EmployeesRegistration.fxml"));
-        layoutAdmin.getChildren().setAll(viewEmployeesRegister);
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
+
+    @FXML
+    private void showEmployeesRegister() throws IOException {
+        VBox viewEmployeeRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/EmployeesRegistration.fxml"));
+        layoutAdmin.getChildren().setAll(viewEmployeeRegister);
     }
     @FXML private void showEmployees () throws IOException {
         VBox viewEmployees = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Employees.fxml"));
         layoutAdmin.getChildren().setAll(viewEmployees);
     }
     @FXML private void showAdminRegister () throws IOException {
-        VBox viewAdminRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/AdminRegistration.fxml"));
-        layoutAdmin.getChildren().setAll(viewAdminRegister);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/AdminRegistration.fxml"));
+            Parent root = loader.load();
+            AdminRegistrationController controller = loader.getController();
+            controller.setGestor(gestor);
+
+            layoutAdmin.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
@@ -50,11 +64,6 @@ public class AdministratorController {
         this.admin = admin;
         usernameAdministrator.setText(admin.getName() + " " + admin.getId());
     }
-
-    public void setGestor (GestionUsuarios gestor){
-        this.gestionUsuarios = gestor;
-    }
-
 
 }
 

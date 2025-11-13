@@ -53,17 +53,20 @@ public class LoginController {
         for(Client client : gestor.getClientList()){
             if(client.getId().equals(id) && client.getPassword().equals(password)){
                 openViewClient(client);
+                found = true;
             }
         }
         for (Admin admin : gestor.getAdminList()) {
             if(admin.getId().equals(id) && admin.getPassword().equals(password)){
                 openViewAdmin(admin);
+                found = true;
             }
 
         }
         for (Cashier cashier : gestor.getCashierList()) {
             if(cashier.getId().equals(id) && cashier.getPassword().equals(password)){
                 openViewCashier(cashier);
+                found = true;
             }
         }
         if(!found){
@@ -98,7 +101,7 @@ public class LoginController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Client panel" + client.getName());
+            stage.setTitle("Client panel " + client.getName());
             stage.show();
 
             Stage loginStage = (Stage) txtId.getScene().getWindow();
@@ -121,7 +124,7 @@ public class LoginController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Admin panel" + admin.getName());
+            stage.setTitle("Admin panel " + admin.getName());
             stage.show();
 
             Stage loginStage = (Stage) txtId.getScene().getWindow();
@@ -143,7 +146,7 @@ public class LoginController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Cashier panel" + cashier.getName());
+            stage.setTitle("Cashier panel " + cashier.getName());
             stage.show();
 
             Stage loginStage = (Stage) txtId.getScene().getWindow();

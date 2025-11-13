@@ -64,7 +64,7 @@ public class EmployeesRegistrationController {
     }
 
 
-    private void clearFields(){
+    @FXML private void clearFields(){
         txtPasswordEmployee.clear();
         txtNameEmployee.clear();
         txtEmailEmployee.clear();
