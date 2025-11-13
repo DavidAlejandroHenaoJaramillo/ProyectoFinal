@@ -2,7 +2,7 @@ module com.example.proyectofinal {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-
+    requires com.example.proyectofinal;
 
 
     exports com.example.proyectofinal.App;
