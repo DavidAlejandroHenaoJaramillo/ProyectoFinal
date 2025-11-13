@@ -1,2 +1,1 @@
-Admin,1116149150,8520,Jackson Henao,jackhen87@gmail.com,Sales
-Admin,1119150996,041107,Alejandro Henao,a.henaojaramillo87@gmail.com,System
+Cashier,1094909736,123456,Luna Sofia Oviedo,lunas.oviedor@uqvirtual.edu.co,01
