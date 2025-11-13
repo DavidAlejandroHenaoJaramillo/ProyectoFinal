@@ -1,10 +1,15 @@
 package com.example.proyectofinal.Controllers;
 
-import com.example.proyectofinal.Models.User;
+import com.example.proyectofinal.Models.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginController {
@@ -19,44 +24,132 @@ public class LoginController {
 
     private ArrayList<User> userList = new ArrayList<>();
 
+    private GestionUsuarios gestor = new GestionUsuarios();
+
     @FXML
     public void initialize() {
 
-        btnLogin.setOnAction(e -> login());
-        btnCancel.setOnAction(e -> cancel());
+        if(!gestor.cargarUsuarios()){
+            showAlertError("Error" , "An error occurred, it will start with empty data");
+        }
+        if(gestor.getAdminList().isEmpty() && gestor.getCashierList().isEmpty() && gestor.getClientList().isEmpty()){
+            Admin adminDefault = new Admin("1" , "123456" , "Admin Default" , "admin@gmail.com" ,
+                    "System");
+            gestor.addAdmin(adminDefault);
+        }
     }
 
     @FXML
     private void login() {
+        if(!validateFields()){
+            return;
+        }
+
         String id = txtId.getText().trim();
         String password = txtPassword.getText();
 
-
-
-        if (id.isEmpty() || password.isEmpty()) {
-            showAlertWarning("Error" , "Complete all fields");
-            return;
+        for(Client client : gestor.getClientList()){
+            if(client.getId().equals(id) && client.getPassword().equals(password)){
+                openViewClient(client);
+            }
         }
-        boolean found = false;
+        for (Admin admin : gestor.getAdminList()) {
+            if(admin.getId().equals(id) && admin.getPassword().equals(password)){
+                openViewAdmin(admin);
+            }else if(admin.getId() != id && admin.getPassword() != password){
+                showAlertWarning("Warning" , "The passwords or the id are incorrect");
 
-        for (User user : userList) {
-            if (user.getId().equals(id) && user.getPassword().equals(password)) {
-                found = true;
-                break;
+            }
+        }
+        for (Cashier cashier : gestor.getCashierList()) {
+            if(cashier.getId().equals(id) && cashier.getPassword().equals(password)){
+                openViewCashier(cashier);
             }
         }
 
-        if (found) {
-            showAlert("Login Succesful", "Welcome " );
-        } else {
-            showAlertError("Error", "Username or password incorrect / User not created");
+
+    }
+
+    private boolean validateFields(){
+        if(txtId.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()){
+            showAlertWarning("Error", "Please fill all the fields");
+            return false;
         }
+        return true;
     }
 
     @FXML
     private void cancel() {
         txtId.clear();
         txtPassword.clear();
+    }
+
+    private void openViewClient(Client client){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/ClientView.fxml"));
+            Parent root = loader.load();
+
+            ClientViewController controller =loader.getController();
+            controller.setClient(client);
+            controller.setGestor(gestor);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Client panel" + client.getName());
+            stage.show();
+
+            Stage loginStage = (Stage) txtId.getScene().getWindow();
+            loginStage.close();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+            showAlertError("Error" , "An error occurred, the client view could not be opened");
+        }
+    }
+
+    private void openViewAdmin(Admin admin){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
+            Parent root = loader.load();
+
+            AdministratorController controller =loader.getController();
+            controller.setAdmin(admin);
+            controller.setGestor(gestor);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Admin panel" + admin.getName());
+            stage.show();
+
+            Stage loginStage = (Stage) txtId.getScene().getWindow();
+            loginStage.close();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+            showAlertError("Error" , "An error occurred, the admin view could not be opened");
+        }
+    }
+    private void openViewCashier(Cashier cashier){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
+            Parent root = loader.load();
+
+            CashierController controller =loader.getController();
+            controller.setCashier(cashier);
+            controller.setGestor(gestor);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Cashier panel" + cashier.getName());
+            stage.show();
+
+            Stage loginStage = (Stage) txtId.getScene().getWindow();
+            loginStage.close();
+
+        } catch(IOException e) {
+            e.printStackTrace();
+            showAlertError("Error" , "An error occurred, the cashier view could not be opened");
+        }
     }
 
     private void showAlert(String title, String message) {
@@ -83,23 +176,4 @@ public class LoginController {
         alertError.showAndWait();
     }
 
-
-
-    @FXML
-    protected void eventKey(KeyEvent event) {
-
-        Object evt = event.getSource();
-
-        if (evt.equals(txtId)) {
-
-            if (event.getCharacter().equals(" ")) {
-                event.consume();
-            }
-
-        } else if (evt.equals(txtPassword)) {
-            if (event.getCharacter().equals(" ")) {
-                event.consume();
-            }
-        }
-    }
 }

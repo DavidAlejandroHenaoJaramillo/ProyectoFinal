@@ -4,6 +4,7 @@ module com.example.proyectofinal {
     requires javafx.graphics;
 
 
+
     exports com.example.proyectofinal.App;
     opens com.example.proyectofinal.App to javafx.fxml;
 
