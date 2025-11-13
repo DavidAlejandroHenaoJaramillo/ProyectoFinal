@@ -52,10 +52,7 @@ public class EmployeesRegistrationController {
         showAlertInformation("Success" , "Cashier registered successfully");
         clearFields();
     }
-    @FXML private void backLayoutAdmin (ActionEvent event) throws IOException {
-        Parent previusView = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
-        layoutAdmin.getChildren().setAll(previusView);
-    }
+
     private boolean validateFields(){
         if(txtIdEmployee.getText().trim().isEmpty() || txtPasswordEmployee.getText().trim().isEmpty()
         || txtNameEmployee.getText().trim().isEmpty() || txtEmailEmployee.getText().trim().isEmpty(
