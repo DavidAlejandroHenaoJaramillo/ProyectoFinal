@@ -1,7 +1,6 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.Cashier;
-import com.example.proyectofinal.Models.Client;
 import com.example.proyectofinal.Models.GestionUsuarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +8,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
+import static java.util.Arrays.setAll;
+
+
 public class ClientsRegistrationController {
+
     @FXML
     private TextField txtIdClient;
     @FXML
@@ -24,13 +28,11 @@ public class ClientsRegistrationController {
     @FXML
     private TextField txtEmailClient;
     @FXML
-    private TextField txtAdressClient;
+    private TextField txtClientId;
     @FXML
-    private TextField txtPhoneClient;
+    private Button btnRegisterClient;
     @FXML
-    private Button btnRegisterEmployee;
-    @FXML
-    private AnchorPane layoutCashier;
+    private AnchorPane layoutAdmin;
 
     private GestionUsuarios gestor = new GestionUsuarios();
 
@@ -41,16 +43,15 @@ public class ClientsRegistrationController {
         String nameClient = txtNameClient.getText();
         String passwordClient = txtPasswordClient.getText();
         String emailClient = txtEmailClient.getText();
-        String adressClient = txtAdressClient.getText();
-        String phoneClient = txtPhoneClient.getText();
+        String ClientId = txtClientId.getText();
 
         if(!validateFields()){
             return;
         }
-        Client client = new client(idClient,passwordClient , nameClient , emailClient , adressClient , phoneClient);
-        gestor.addClient(client);
+        Cashier cashier = new Cashier(idClient,passwordClient , nameClient , emailClient , ClientId);
+        gestor.addCashier(cashier);
         gestor.guardarUsuarios();
-        showAlertInformation("Success" , "Client registered successfully");
+        showAlertInformation("Success" , "Cashier registered successfully");
         clearFields();
     }
     @FXML private void backLayoutAdmin (ActionEvent event) throws IOException {
@@ -58,9 +59,9 @@ public class ClientsRegistrationController {
         layoutAdmin.getChildren().setAll(previusView);
     }
     private boolean validateFields(){
-        if(txtIdEmployee.getText().trim().isEmpty() || txtPasswordEmployee.getText().trim().isEmpty()
-                || txtNameEmployee.getText().trim().isEmpty() || txtEmailEmployee.getText().trim().isEmpty(
-        ) || txtWorkerId.getText().trim().isEmpty()){
+        if(txtIdClient.getText().trim().isEmpty() || txtPasswordClient.getText().trim().isEmpty()
+                || txtNameClient.getText().trim().isEmpty() || txtEmailClient.getText().trim().isEmpty(
+        ) || txtClientId.getText().trim().isEmpty()){
             showAlertError("Error", "Please fill all the fields");
             return false;
         }
@@ -69,11 +70,11 @@ public class ClientsRegistrationController {
 
 
     private void clearFields(){
-        txtPasswordEmployee.clear();
-        txtNameEmployee.clear();
-        txtEmailEmployee.clear();
-        txtWorkerId.clear();
-        txtIdEmployee.clear();
+        txtPasswordClient.clear();
+        txtNameClient.clear();
+        txtEmailClient.clear();
+        txtClientId.clear();
+        txtIdClient.clear();
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -105,4 +106,5 @@ public class ClientsRegistrationController {
         alertError.setContentText(message);
         alertError.showAndWait();
     }
+
 }
