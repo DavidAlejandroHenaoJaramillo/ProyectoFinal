@@ -21,9 +21,10 @@
               <columns>
                 <TableColumn fx:id="colIdEmployees" prefWidth="123.19998455047607" text="Id" />
                 <TableColumn fx:id="colNameEmployees" prefWidth="124.00001525878906" text="Name" />
-                  <TableColumn fx:id="colPhoneEmployees" prefWidth="106.39996337890625" text="Phone number" />
-                  <TableColumn fx:id="colPasswordEmployees" prefWidth="175.20001220703125" text="Password" />
-                  <TableColumn fx:id="colWorkerEmployee" prefWidth="210.39996337890625" text="Worker Id" />
+                  <TableColumn fx:id="colPhoneEmployees" prefWidth="106.39996337890625" text="Email" />
+                  <TableColumn fx:id="colPasswordEmployees" prefWidth="146.39996337890625" text="Password" />
+                  <TableColumn prefWidth="140.00003051757812" text="Department" />
+                  <TableColumn prefWidth="99.99993896484375" text="Role" />
               </columns>
             </TableView>
             <Button fx:id="btnModifyEmployee" alignment="CENTER" layoutX="182.0" layoutY="485.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="94.0" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20;" text="Modify" textFill="WHITE">
