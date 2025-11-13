@@ -7,22 +7,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectofinal.Controllers.EmployeesRegistrationController">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #468BB0;">
          <children>
-            <Label layoutX="111.0" layoutY="178.0" text="Phone number" textFill="WHITE">
+            <Label layoutX="111.0" layoutY="178.0" text="Name" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="15.0" />
                </font>
             </Label>
             <TextField fx:id="txtIdEmployee" layoutX="287.0" layoutY="85.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the id" />
-            <TextField fx:id="txtNameEmployee" layoutX="287.0" layoutY="128.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the name" />
-            <TextField fx:id="txtPhoneEmployee" layoutX="287.0" layoutY="174.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the phone number" />
-            <TextField fx:id="txtPasswordEmployee" layoutX="287.0" layoutY="226.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the password" />
+            <TextField fx:id="txtPasswordEmployee" layoutX="287.0" layoutY="128.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the password" />
+            <TextField fx:id="txtNameEmployee" layoutX="287.0" layoutY="174.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the name" />
+            <TextField fx:id="txtEmailEmployee" layoutX="287.0" layoutY="226.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the email" />
             <TextField fx:id="txtWorkerId" layoutX="287.0" layoutY="274.0" prefHeight="26.0" prefWidth="166.0" promptText="Enter the worker id" />
-            <Label layoutX="111.0" layoutY="230.0" text="Password" textFill="WHITE">
+            <Label layoutX="111.0" layoutY="230.0" text="Email" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="15.0" />
                </font>
@@ -32,7 +31,7 @@
                   <Font name="Arial Black" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="111.0" layoutY="132.0" text="Name" textFill="WHITE">
+            <Label layoutX="111.0" layoutY="132.0" text="Password" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="15.0" />
                </font>
@@ -47,12 +46,12 @@
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
-            <Button fx:id="btnRegisterEmployee" alignment="CENTER" layoutX="189.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Register" textFill="WHITE">
+            <Button fx:id="btnRegisterEmployee" alignment="CENTER" layoutX="189.0" layoutY="332.0" mnemonicParsing="false" onAction="#registerEmployee" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Register" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="btnCancelRegistration" alignment="CENTER" layoutX="321.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Cancel" textFill="WHITE">
+            <Button fx:id="btnCancelRegistration" alignment="CENTER" layoutX="321.0" layoutY="332.0" mnemonicParsing="false" onAction="#backLayoutCashier" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Cancel" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>

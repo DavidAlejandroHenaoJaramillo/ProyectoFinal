@@ -24,7 +24,7 @@ public class CashierController {
     private GestionUsuarios gestionUsuarios;
 
     @FXML private void showRegisterClient () throws IOException {
-        VBox viewClientRegistration = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/ClientRegistration.fxml"));
+        VBox viewClientRegistration = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/ClientsRegistration.fxml"));
         layoutCashier.getChildren().setAll(viewClientRegistration);
     }
     @FXML private void showClients () throws IOException {
@@ -33,13 +33,14 @@ public class CashierController {
     }
     @FXML private void showCheckBalance() throws IOException {
         VBox viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
+        layoutCashier.getChildren().setAll(viewCheckBalance);
     }
     @FXML private void showDeposit () throws IOException {
         VBox viewDeposit = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Deposit.fxml"));
         layoutCashier.getChildren().setAll(viewDeposit);
     }
     @FXML private void showTransfers() throws IOException {
-        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Transfers.fxml"));
+        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CashierTransfer.fxml"));
         layoutCashier.getChildren().setAll(viewTransfers);
     }
 

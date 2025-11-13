@@ -42,9 +42,6 @@ public class AdministratorController {
         ((Stage) layoutAdmin.getScene().getWindow()).close();
     }
 
-    public void configAdmin () throws IOException {
-
-    }
     public void setAdmin(Admin admin) {
         this.admin = admin;
         usernameAdministrator.setText(admin.getName() + " " + admin.getId());

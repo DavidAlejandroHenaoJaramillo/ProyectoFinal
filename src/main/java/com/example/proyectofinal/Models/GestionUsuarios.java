@@ -83,25 +83,25 @@ public class GestionUsuarios {
             for(Admin admin : adminList){
                 writer.println("Admin,"+
                         admin.getId()+ ","
-                        + admin.getName() + ","
+                        + admin.getPassword() + ","
+                        + admin.getName()+ ","
                         + admin.getEmail()+ ","
-                        + admin.getPassword()+ ","
                         + admin.getDepartment());
             }
             for (Cashier cashier : cashierList) {
                 writer.println("Cashier," +
                         cashier.getId() + "," +
+                        cashier.getPassword() + "," +
                         cashier.getName() + "," +
                         cashier.getEmail() + "," +
-                        cashier.getPassword() + "," +
                         cashier.getWorkerId());
             }
             for (Client client : clientList) {
                 writer.println("Client," +
                         client.getId() + "," +
+                        client.getPassword() + "," +
                         client.getName() + "," +
                         client.getEmail() + "," +
-                        client.getPassword() + "," +
                         client.getPhone() + "," +
                         client.getAdress());
             }

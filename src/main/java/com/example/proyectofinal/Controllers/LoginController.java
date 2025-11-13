@@ -131,7 +131,7 @@ public class LoginController {
     }
     private void openViewCashier(Cashier cashier){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Cashier.fxml"));
             Parent root = loader.load();
 
             CashierController controller =loader.getController();
