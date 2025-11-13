@@ -20,15 +20,15 @@ public class AdministratorController {
     private Label usernameAdministrator;
 
     @FXML private void showEmployeesRegister () throws IOException {
-        VBox viewEmployeesRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/views/EmployeesRegistration.fxml"));
+        VBox viewEmployeesRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/Views/EmployeesRegistration.fxml"));
         layoutAdmin.getChildren().setAll(viewEmployeesRegister);
     }
     @FXML private void showEmployees () throws IOException {
-        VBox viewEmployees = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/views/Employees.fxml"));
+        VBox viewEmployees = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/Views/Employees.fxml"));
         layoutAdmin.getChildren().setAll(viewEmployees);
     }
     @FXML private void onLogOut () throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/views/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/Views/Login.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -36,6 +36,9 @@ public class AdministratorController {
         ((Stage) layoutAdmin.getScene().getWindow()).close();
     }
 
+    public void configAdmin () throws IOException {
+
+    }
     public void setUsername(String username) {
         usernameAdministrator.setText(username);
     }

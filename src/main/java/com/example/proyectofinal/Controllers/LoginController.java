@@ -21,7 +21,6 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userList.add(new User("1119150996" , "123456" , "Alejandro Henao" , "a.henaojaramillo87@gmail.com" ));
 
         btnLogin.setOnAction(e -> login());
         btnCancel.setOnAction(e -> cancel());
@@ -31,7 +30,7 @@ public class LoginController {
     private void login() {
         String id = txtId.getText().trim();
         String password = txtPassword.getText();
-        String name = userList.get(0).getName();
+
 
 
         if (id.isEmpty() || password.isEmpty()) {
@@ -48,7 +47,7 @@ public class LoginController {
         }
 
         if (found) {
-            showAlert("Login Succesful", "Welcome " + name);
+            showAlert("Login Succesful", "Welcome " );
         } else {
             showAlertError("Error", "Username or password incorrect / User not created");
         }
