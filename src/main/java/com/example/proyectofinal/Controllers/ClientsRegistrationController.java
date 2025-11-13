@@ -1,6 +1,7 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.Cashier;
+import com.example.proyectofinal.Models.Client;
 import com.example.proyectofinal.Models.GestionUsuarios;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,9 @@ public class ClientsRegistrationController {
     @FXML
     private TextField txtEmailClient;
     @FXML
-    private TextField txtClientId;
+    private TextField txtAdressClient;
+    @FXML
+    private TextField txtPhoneClient;
     @FXML
     private Button btnRegisterClient;
     @FXML
@@ -43,25 +46,23 @@ public class ClientsRegistrationController {
         String nameClient = txtNameClient.getText();
         String passwordClient = txtPasswordClient.getText();
         String emailClient = txtEmailClient.getText();
-        String ClientId = txtClientId.getText();
+        String adressClient = txtAdressClient.getText();
+        String phoneClient = txtPhoneClient.getText();
 
         if(!validateFields()){
             return;
         }
-        Cashier cashier = new Cashier(idClient,passwordClient , nameClient , emailClient , ClientId);
-        gestor.addCashier(cashier);
+        Client client = new Client(idClient,passwordClient , nameClient , emailClient , adressClient , phoneClient);
+        gestor.addClient(client);
         gestor.guardarUsuarios();
-        showAlertInformation("Success" , "Cashier registered successfully");
+        showAlertInformation("Success" , "Client registered successfully");
         clearFields();
     }
-    @FXML private void backLayoutAdmin (ActionEvent event) throws IOException {
-        Parent previusView = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Administrator.fxml"));
-        layoutAdmin.getChildren().setAll(previusView);
-    }
+
     private boolean validateFields(){
         if(txtIdClient.getText().trim().isEmpty() || txtPasswordClient.getText().trim().isEmpty()
                 || txtNameClient.getText().trim().isEmpty() || txtEmailClient.getText().trim().isEmpty(
-        ) || txtClientId.getText().trim().isEmpty()){
+        ) || txtAdressClient.getText().trim().isEmpty()|| txtPhoneClient.getText().trim().isEmpty()){
             showAlertError("Error", "Please fill all the fields");
             return false;
         }
@@ -73,8 +74,9 @@ public class ClientsRegistrationController {
         txtPasswordClient.clear();
         txtNameClient.clear();
         txtEmailClient.clear();
-        txtClientId.clear();
+        txtAdressClient.clear();
         txtIdClient.clear();
+        txtPhoneClient.clear();
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
