@@ -103,7 +103,7 @@ public class GestionUsuarios {
                         client.getName() + "," +
                         client.getEmail() + "," +
                         client.getPhone() + "," +
-                        client.getAdress());
+                        client.getAddress());
             }
             return true;
         } catch(IOException e){

@@ -1,12 +1,12 @@
 package com.example.proyectofinal.Models;
 
 public class Client extends User {
-    private String adress;
+    private String address;
     private String phone;
 
-    public Client(String id, String password, String name, String email  , String adress, String phone) {
+    public Client(String id, String password, String name, String email  , String address, String phone) {
         super(id, password, name, email);
-        this.adress = adress;
+        this.address = address;
         this.phone = phone;
     }
 
@@ -15,11 +15,11 @@ public class Client extends User {
         return "Client";
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
     public String getPhone() {
         return phone;
