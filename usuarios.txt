@@ -1,3 +1,2 @@
-Cashier,1094909736,654321,Luna Sofia Oviedo,lunas.oviedor@uqvirtual.edu.co,01
-Admin,1119150996,123456,Alejandro Henao Jaramillo,a.henaojaramillo87@gmail.com,System
-Client,1116435641,2580,Lina Marcela Jaramillo,sahianj87@gmail.com,Conjunto Mirador de la Huerta,3122053230
+Admin,1116149150,8520,Jackson Henao,jackhen87@gmail.com,Sales
+Admin,1119150996,041107,Alejandro Henao,a.henaojaramillo87@gmail.com,System
