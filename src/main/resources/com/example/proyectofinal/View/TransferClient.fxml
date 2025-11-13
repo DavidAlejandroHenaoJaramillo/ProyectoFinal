@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectofinal.Controllers.DepositController">
+    <children>
+        <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #468BB0;">
+            <children>
+                <TextField fx:id="txtAccountNumber" layoutX="67.0" layoutY="213.0" prefHeight="26.0" prefWidth="458.0" promptText="Enter the account number" />
+                <TextField fx:id="txtAmountDeposit" layoutX="67.0" layoutY="278.0" prefHeight="26.0" prefWidth="458.0" promptText="0.00" />
+            <ComboBox editable="true" layoutX="67.0" layoutY="140.0" prefHeight="26.0" prefWidth="458.0" promptText="select your corresponding account" />
+                <Label layoutX="67.0" layoutY="248.0" text="Amount to deposit" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Black" size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="63.0" layoutY="176.0" text="Destination account number" textFill="WHITE">
+                    <font>
+                        <Font name="Arial Black" size="15.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" layoutX="197.0" layoutY="23.0" text="Make a deposit" textFill="WHITE">
+                    <font>
+                        <Font name="Berlin Sans FB" size="32.0" />
+                    </font>
+                </Label>
+                <Button fx:id="btnMakeDeposit" alignment="CENTER" layoutX="131.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Make a deposit" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnCancelTransfer" alignment="CENTER" layoutX="367.0" layoutY="332.0" mnemonicParsing="false" style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;" text="Cancel" textFill="WHITE">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+            <Label alignment="CENTER" layoutX="63.0" layoutY="109.0" text="Origin account for the transfer" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="15.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </children>
+</VBox>
