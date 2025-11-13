@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class LoginController {
     @FXML
-    private TextField txtUser;
+    private TextField txtId;
     @FXML
     private PasswordField txtPassword;
     @FXML
@@ -21,8 +21,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userList.add(new User("alejandro2007", "123456" , "Alejandro" , "a.henaojaramillo87@gmail.com" , "1119150996"));
-        userList.add(new User("Dandro07", "FliaHenaoJ11" , "David" , "davida.henaoj@uqvirtual.edu.co" , "1094909736"));
+        userList.add(new User("1119150996" , "123456" , "Alejandro Henao" , "a.henaojaramillo87@gmail.com" ));
 
         btnLogin.setOnAction(e -> login());
         btnCancel.setOnAction(e -> cancel());
@@ -30,25 +29,26 @@ public class LoginController {
 
     @FXML
     private void login() {
-        String username = txtUser.getText();
+        String id = txtId.getText().trim();
         String password = txtPassword.getText();
+        String name = userList.get(0).getName();
 
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (id.isEmpty() || password.isEmpty()) {
             showAlertWarning("Error" , "Complete all fields");
             return;
         }
         boolean found = false;
 
         for (User user : userList) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            if (user.getId().equals(id) && user.getPassword().equals(password)) {
                 found = true;
                 break;
             }
         }
 
         if (found) {
-            showAlert("Login Succesful", "Welcome " + username);
+            showAlert("Login Succesful", "Welcome " + name);
         } else {
             showAlertError("Error", "Username or password incorrect / User not created");
         }
@@ -56,7 +56,7 @@ public class LoginController {
 
     @FXML
     private void cancel() {
-        txtUser.clear();
+        txtId.clear();
         txtPassword.clear();
     }
 
@@ -91,7 +91,7 @@ public class LoginController {
 
         Object evt = event.getSource();
 
-        if (evt.equals(txtUser)) {
+        if (evt.equals(txtId)) {
 
             if (event.getCharacter().equals(" ")) {
                 event.consume();

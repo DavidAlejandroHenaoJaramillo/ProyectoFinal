@@ -1,20 +1,22 @@
 package com.example.proyectofinal.Models;
 
-public class User{
-    private String username;
+public abstract class User{
+    private String id;
     private String password;
     private String name;
     private String email;
-    private String id;
 
 
-    public User(String username, String password, String name, String email, String id) {
-        this.username = username;
+
+    public User( String id, String password, String name, String email) {
+
+        this.id = id;
         this.password = password;
         this.name = name;
         this.email = email;
-        this.id = id;
     }
+
+    public abstract String getRolDescription ();
 
     public String getName() {
         return name;
@@ -26,10 +28,6 @@ public class User{
 
     public String getId() {
         return id;
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public String getPassword() {
