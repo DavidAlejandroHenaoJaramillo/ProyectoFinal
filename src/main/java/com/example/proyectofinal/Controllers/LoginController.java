@@ -45,6 +45,8 @@ public class LoginController {
             return;
         }
 
+        boolean found = false;
+
         String id = txtId.getText().trim();
         String password = txtPassword.getText();
 
@@ -56,15 +58,16 @@ public class LoginController {
         for (Admin admin : gestor.getAdminList()) {
             if(admin.getId().equals(id) && admin.getPassword().equals(password)){
                 openViewAdmin(admin);
-            }else if(admin.getId() != id && admin.getPassword() != password){
-                showAlertWarning("Warning" , "The passwords or the id are incorrect");
-
             }
+
         }
         for (Cashier cashier : gestor.getCashierList()) {
             if(cashier.getId().equals(id) && cashier.getPassword().equals(password)){
                 openViewCashier(cashier);
             }
+        }
+        if(!found){
+            showAlertWarning("Warning", "The ID or password are incorrect");
         }
 
 
