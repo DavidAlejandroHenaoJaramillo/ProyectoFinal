@@ -35,7 +35,7 @@
                                     <Insets bottom="10.0" top="10.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="136.0" text="(Username)" textAlignment="CENTER" textFill="#f7f7f7">
+                              <Label fx:id="usernameCashier" alignment="CENTER" contentDisplay="CENTER" prefHeight="29.0" prefWidth="136.0" text="(Username)" textAlignment="CENTER" textFill="#f7f7f7">
                                  <font>
                                     <Font name="Arial Black" size="14.0" />
                                  </font>
@@ -49,32 +49,32 @@
                            <children>
                               <AnchorPane>
                                  <children>
-                                    <Button fx:id="btnCreateEmployee" alignment="CENTER" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="116.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 30;" text="Register Client" textFill="#fafafa">
+                                    <Button fx:id="btnCreateEmployee" alignment="CENTER" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" onAction="#showRegisterClient" prefHeight="24.0" prefWidth="116.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 30;" text="Register Client" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnShowClients" alignment="CENTER" layoutX="34.0" layoutY="49.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="110.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Clients" textFill="#fafafa">
+                                    <Button fx:id="btnShowClients" alignment="CENTER" layoutX="34.0" layoutY="49.0" mnemonicParsing="false" onAction="#showClients" prefHeight="26.0" prefWidth="110.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Clients" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnCheckBalance" alignment="CENTER" layoutX="32.0" layoutY="90.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="114.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Check balance" textFill="#fafafa">
+                                    <Button fx:id="btnCheckBalance" alignment="CENTER" layoutX="32.0" layoutY="90.0" mnemonicParsing="false" onAction="#showCheckBalance" prefHeight="26.0" prefWidth="114.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Check balance" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnDeposit" alignment="CENTER" layoutX="51.0" layoutY="130.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="75.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Deposit" textFill="#fafafa">
+                                    <Button fx:id="btnDeposit" alignment="CENTER" layoutX="51.0" layoutY="130.0" mnemonicParsing="false" onAction="#showDeposit" prefHeight="22.0" prefWidth="75.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Deposit" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnTransfers" alignment="CENTER" layoutX="51.0" layoutY="163.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="75.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Transfers" textFill="#fafafa">
+                                    <Button fx:id="btnTransfers" alignment="CENTER" layoutX="51.0" layoutY="163.0" mnemonicParsing="false" onAction="#showTransfers" prefHeight="22.0" prefWidth="75.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Transfers" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnLogOut" alignment="CENTER" layoutX="37.0" layoutY="206.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="104.0" style="-fx-border-radius: 20; -fx-background-color: #87220C; -fx-border-color: black; -fx-background-radius: 30;" text="Log out" textFill="#fafafa">
+                                    <Button fx:id="btnLogOut" alignment="CENTER" layoutX="37.0" layoutY="206.0" mnemonicParsing="false" onAction="#onLogOut" prefHeight="28.0" prefWidth="104.0" style="-fx-border-radius: 20; -fx-background-color: #87220C; -fx-border-color: black; -fx-background-radius: 30;" text="Log out" textFill="#fafafa">
                                        <font>
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
@@ -87,7 +87,7 @@
                   </VBox>
                </left>
                <center>
-                  <AnchorPane prefHeight="404.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+                  <AnchorPane fx:id="layoutCashier" prefHeight="404.0" prefWidth="450.0" BorderPane.alignment="CENTER">
                      <children>
                         <HBox layoutX="134.0" layoutY="20.0" />
                         <Label layoutX="149.0" layoutY="20.0" text="Choose an option">
