@@ -24,8 +24,11 @@ public class LoginController {
 
     private ArrayList<User> userList = new ArrayList<>();
 
-    private GestionUsuarios gestor = new GestionUsuarios();
+    private GestionUsuarios gestor;
 
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
     @FXML
     public void initialize() {
 

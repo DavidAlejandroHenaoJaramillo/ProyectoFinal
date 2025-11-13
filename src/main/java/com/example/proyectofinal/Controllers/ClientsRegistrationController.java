@@ -37,9 +37,11 @@ public class ClientsRegistrationController {
     @FXML
     private AnchorPane layoutAdmin;
 
-    private GestionUsuarios gestor = new GestionUsuarios();
+    private GestionUsuarios gestor;
 
-
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
 
     @FXML private void registerClient () {
         String idClient = txtIdClient.getText();

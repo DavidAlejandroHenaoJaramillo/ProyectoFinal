@@ -21,7 +21,11 @@ public class CashierController {
     private AnchorPane layoutCashier;
 
     private Cashier cashier;
-    private GestionUsuarios gestionUsuarios;
+    private GestionUsuarios gestor;
+
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
 
     @FXML private void showRegisterClient () throws IOException {
         VBox viewClientRegistration = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/ClientsRegistration.fxml"));
@@ -56,7 +60,5 @@ public class CashierController {
         this.cashier = cashier;
         usernameCashier.setText(cashier.getName() + " " + cashier.getId());
     }
-    public void setGestor (GestionUsuarios gestor){
-        this.gestionUsuarios = gestor;
-    }
+
 }
