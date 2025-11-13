@@ -12,7 +12,7 @@ public class Client extends User {
 
     @Override
     public String getRolDescription (){
-        return "Cliente";
+        return "Client";
     }
 
     public String getAdress() {

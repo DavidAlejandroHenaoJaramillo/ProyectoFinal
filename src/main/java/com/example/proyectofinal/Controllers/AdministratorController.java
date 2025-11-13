@@ -33,6 +33,10 @@ public class AdministratorController {
         VBox viewEmployees = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Employees.fxml"));
         layoutAdmin.getChildren().setAll(viewEmployees);
     }
+    @FXML private void showAdminRegister () throws IOException {
+        VBox viewAdminRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/AdminRegistration.fxml"));
+        layoutAdmin.getChildren().setAll(viewAdminRegister);
+    }
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
         Parent root = loader.load();

@@ -64,6 +64,11 @@
                                           <Font name="Berlin Sans FB" size="13.5" />
                                        </font>
                                     </Button>
+                                    <Button fx:id="btnRegisterAdmin" alignment="CENTER" layoutX="20.0" layoutY="148.0" mnemonicParsing="false" onAction="#showAdminRegister" prefHeight="48.0" prefWidth="137.0" style="-fx-border-radius: 20; -fx-background-color: #196991; -fx-border-color: white; -fx-background-radius: 20;" text="Register Admin" textFill="#fafafa">
+                                       <font>
+                                          <Font name="Berlin Sans FB" size="13.5" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                            </children>
