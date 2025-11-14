@@ -33,9 +33,20 @@ public class AdministratorController {
         VBox viewEmployeeRegister = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/EmployeesRegistration.fxml"));
         layoutAdmin.getChildren().setAll(viewEmployeeRegister);
     }
-    @FXML private void showEmployees () throws IOException {
-        VBox viewEmployees = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Employees.fxml"));
-        layoutAdmin.getChildren().setAll(viewEmployees);
+    @FXML
+    private void showEmployees() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Employees.fxml"));
+            Parent root = loader.load();
+
+            EmployeesController controller = loader.getController();
+            controller.setGestor(gestor);
+
+            layoutAdmin.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML private void showAdminRegister () throws IOException {
         try {

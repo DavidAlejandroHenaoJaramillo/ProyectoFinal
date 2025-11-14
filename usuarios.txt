@@ -1,4 +1,4 @@
 Admin,1119150996,041107,Alejandro Henao Jaramillo,a.henaojaramillo87@gmail.com,System
-Admin,1094909736,654321,Luna Sofia Oviedo Rios,lunas.oviedor@uqvirtual.edu.co,Sales
+Admin,1094909736,301207,Luna Sofia Oviedo Rios,lunas.oviedor@uqvirtual.edu.co,Sales
 Cashier,1094909736,123456,Luna Sofia Oviedo,lunas.oviedor@uqvirtual.edu.co,01
-Client,1116435641,8520,Lina Marcela Jaramillo,sahianj87@gmail.com,La huerta,3122053230
+Client,1116435641,8520,Lina Marcela Jaramillo,sahianj87@gmail.com,3122053230,La huerta
