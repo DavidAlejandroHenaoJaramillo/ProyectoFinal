@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectofinal.Controllers.DepositController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proyectofinal.Controllers.TransferClientController">
     <children>
         <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #468BB0;">
             <children>

@@ -1,20 +1,11 @@
 package com.example.proyectofinal.Controllers;
 
-import com.example.proyectofinal.Models.Cashier;
-import com.example.proyectofinal.Models.GestionUsuarios;
+import com.example.proyectofinal.Models.AccountArrange;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-
-import java.io.IOException;
-
-import static java.util.Arrays.setAll;
 
 public class TransferController {
 
@@ -29,72 +20,75 @@ public class TransferController {
     @FXML
     private Button btnCancelTransfer;
 
-    private GestionUsuarios gestor = new GestionUsuarios();
+    private AccountArrange accountArrange = new AccountArrange();
 
+    @FXML
+    private void initialize() {
+        accountArrange.cargarAccounts();
+    }
 
+    @FXML
+    private void makeTransfer(ActionEvent event) {
 
-    @FXML private void makeTransfer (ActionEvent event) throws IOException {
-        String originAccount = txtOriginAccount.getText();
-        String accountNumber = txtAccountNumber.getText();
-        String amountTransfer = txtAmountTransfer.getText();
+        String origin = txtOriginAccount.getText().trim();
+        String destination = txtAccountNumber.getText().trim();
+        String amountStr = txtAmountTransfer.getText().trim();
 
-        if(!validateFields()){
+        if (origin.isEmpty() || destination.isEmpty() || amountStr.isEmpty()) {
+            showAlertWarning("Missing fields", "Please fill in all fields.");
             return;
         }
-        Cashier cashier = new Cashier(idEmployee,passwordEmployee , nameEmployee , emailEmployee , workerId);
-        gestor.addCashier(cashier);
-        gestor.guardarUsuarios();
-        showAlertInformation("Success" , "Cashier registered successfully");
-        clearFields();
-    }
 
-    private boolean validateFields(){
-        if(txtIdEmployee.getText().trim().isEmpty() || txtPasswordEmployee.getText().trim().isEmpty()
-                || txtNameEmployee.getText().trim().isEmpty() || txtEmailEmployee.getText().trim().isEmpty(
-        ) || txtWorkerId.getText().trim().isEmpty()){
-            showAlertError("Error", "Please fill all the fields");
-            return false;
+        double amount;
+        try {
+            amount = Double.parseDouble(amountStr);
+            if (amount <= 0) {
+                showAlertWarning("Invalid amount", "The amount must be greater than 0.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlertError("Invalid number", "Please enter a valid numeric amount.");
+            return;
         }
-        return true;
+
+        boolean result = accountArrange.realizarTransferencia(origin, destination, amount);
+
+        if (result) {
+            showAlertInformation("Success", "Transfer completed successfully!");
+            clearFields();
+        } else {
+            showAlertError("Error", "Transfer failed. Check account numbers or balance.");
+        }
     }
 
-
-    @FXML private void clearFields(){
-        txtPasswordEmployee.clear();
-        txtNameEmployee.clear();
-        txtEmailEmployee.clear();
-        txtWorkerId.clear();
-        txtIdEmployee.clear();
+    @FXML
+    private void clearFields() {
+        txtOriginAccount.clear();
+        txtAccountNumber.clear();
+        txtAmountTransfer.clear();
     }
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
 
+    private void showAlertInformation(String title, String message) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(message);
+        a.showAndWait();
     }
+
     private void showAlertWarning(String title, String message) {
-        Alert alertWarning = new Alert(Alert.AlertType.WARNING);
-        alertWarning.setTitle(title);
-        alertWarning.setHeaderText(null);
-        alertWarning.setContentText(message);
-        alertWarning.showAndWait();
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(message);
+        a.showAndWait();
     }
 
     private void showAlertError(String title, String message) {
-        Alert alertError = new Alert(Alert.AlertType.ERROR);
-        alertError.setTitle(title);
-        alertError.setHeaderText(null);
-        alertError.setContentText(message);
-        alertError.showAndWait();
+        Alert a = new Alert(Alert.AlertType.ERROR);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(message);
+        a.showAndWait();
     }
-    private void showAlertInformation(String title, String message) {
-        Alert alertError = new Alert(Alert.AlertType.INFORMATION);
-        alertError.setTitle(title);
-        alertError.setHeaderText(null);
-        alertError.setContentText(message);
-        alertError.showAndWait();
-    }
-
 }
