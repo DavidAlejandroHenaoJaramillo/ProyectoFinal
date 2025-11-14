@@ -80,7 +80,7 @@ public class Account {
         if (amount > 0) {
             this.balance += amount;
         }
-        if("BUSSINESS".equals(this.accountType)) {
+        if("BUSINESS".equals(this.accountType)) {
             this.transactionVolume += amount;
         }
         return true;
@@ -98,7 +98,7 @@ public class Account {
         }
         if(this.balance >= amount){
             this.balance -= amount;
-            if("BUSSINESS".equals(this.accountType)) {
+            if("BUSINESS".equals(this.accountType)) {
                 this.transactionVolume += amount;
             }
             return true;
@@ -116,8 +116,8 @@ public class Account {
             case "SAVINGS":
                 return "Interest rate: " + interestRate + "%";
             case "CHECKING":
-                return "Avaiable overdraft limit: $ " + String.format("%.2f", overdraftLimit);
-            case "BUSSINESS":
+                return "Available overdraft limit: $ " + String.format("%.2f", overdraftLimit);
+            case "BUSINESS":
                 return "Transaction volume: $ " + String.format("%.2f", transactionVolume);
             default:
                 return "";
