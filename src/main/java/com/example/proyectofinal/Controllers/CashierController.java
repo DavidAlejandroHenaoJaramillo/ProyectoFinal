@@ -40,7 +40,7 @@ public class CashierController {
             Parent root = loader.load();
 
             ClientsController controller = loader.getController();
-            controller.setGestor(gestor); // <--- MUY IMPORTANTE
+            controller.setGestor(gestor);
 
             layoutCashier.getChildren().setAll(root);
 
