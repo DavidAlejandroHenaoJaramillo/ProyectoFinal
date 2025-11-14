@@ -1,6 +1,7 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.AccountArrange;
+import com.example.proyectofinal.Models.GestionUsuarios;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,6 +23,12 @@ public class TransferController {
 
     @FXML
     private Button btnCancelTransfer;
+
+    private GestionUsuarios gestor;
+
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
 
     private final AccountArrange accountArrange = new AccountArrange();
 

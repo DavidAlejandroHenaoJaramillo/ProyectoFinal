@@ -57,8 +57,18 @@ public class CashierController {
         layoutCashier.getChildren().setAll(viewDeposit);
     }
     @FXML private void showTransfers() throws IOException {
-        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CashierTransfer.fxml"));
-        layoutCashier.getChildren().setAll(viewTransfers);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Transfer.fxml"));
+            Parent root = loader.load();
+
+            TransferController controller = loader.getController();
+            controller.setGestor(gestor);
+
+            layoutCashier.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML private void onLogOut () throws IOException {
