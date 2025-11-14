@@ -29,7 +29,7 @@ public class ClientsRegistrationController {
     @FXML
     private TextField txtEmailClient;
     @FXML
-    private TextField txtAdressClient;
+    private TextField txtAddressClient;
     @FXML
     private TextField txtPhoneClient;
     @FXML
@@ -48,13 +48,13 @@ public class ClientsRegistrationController {
         String nameClient = txtNameClient.getText();
         String passwordClient = txtPasswordClient.getText();
         String emailClient = txtEmailClient.getText();
-        String adressClient = txtAdressClient.getText();
+        String addressClient = txtAddressClient.getText();
         String phoneClient = txtPhoneClient.getText();
 
         if(!validateFields()){
             return;
         }
-        Client client = new Client(idClient,passwordClient , nameClient , emailClient , adressClient , phoneClient);
+        Client client = new Client(idClient,passwordClient , nameClient , emailClient , addressClient , phoneClient);
         gestor.addClient(client);
         gestor.guardarUsuarios();
         showAlertInformation("Success" , "Client registered successfully");
@@ -64,7 +64,7 @@ public class ClientsRegistrationController {
     private boolean validateFields(){
         if(txtIdClient.getText().trim().isEmpty() || txtPasswordClient.getText().trim().isEmpty()
                 || txtNameClient.getText().trim().isEmpty() || txtEmailClient.getText().trim().isEmpty(
-        ) || txtAdressClient.getText().trim().isEmpty()|| txtPhoneClient.getText().trim().isEmpty()){
+        ) || txtAddressClient.getText().trim().isEmpty()|| txtPhoneClient.getText().trim().isEmpty()){
             showAlertError("Error", "Please fill all the fields");
             return false;
         }
@@ -76,7 +76,7 @@ public class ClientsRegistrationController {
         txtPasswordClient.clear();
         txtNameClient.clear();
         txtEmailClient.clear();
-        txtAdressClient.clear();
+        txtAddressClient.clear();
         txtIdClient.clear();
         txtPhoneClient.clear();
     }

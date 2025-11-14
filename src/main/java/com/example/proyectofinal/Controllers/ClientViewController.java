@@ -25,16 +25,16 @@ public class ClientViewController {
 
     private Client client;
     private GestionUsuarios gestor;
-    private GestionUsuarios gestionUsuarios;
+
 
 
     public void setClient(Client cient) {
-        this.client = client;
-        usernameClient.setText(client.getName() + " " + client.getId());
+        this.client = cient;
+        usernameClient.setText(cient.getName() + " " + cient.getId());
     }
 
     public void setGestor (GestionUsuarios gestor){
-        this.gestionUsuarios = gestor;
+        this.gestor = gestor;
     }
 
     @FXML private void showBalance () throws IOException {
