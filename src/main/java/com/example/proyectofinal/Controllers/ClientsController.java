@@ -1,6 +1,7 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.Client;
+import com.example.proyectofinal.Models.GestionUsuarios;
 import com.example.proyectofinal.Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +37,19 @@ public class ClientsController {
     private TableColumn<Client, String> colEmailClients;
 
     @FXML
+    private TextField txtIdClient;
+    @FXML
+    private TextField txtNameClient;
+    @FXML
+    private TextField txtPasswordClient;
+    @FXML
+    private TextField txtEmailClient;
+    @FXML
+    private TextField txtAddressClient;
+    @FXML
+    private TextField txtPhoneClient;
+
+    @FXML
     private Button btnModifyClient;
 
     @FXML
@@ -43,12 +57,26 @@ public class ClientsController {
 
     private ObservableList<Client> clientsObservable;
 
+    private GestionUsuarios gestor;
+
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
+
     private static final String USERS_FILE = "usuarios.txt";
 
     @FXML
     public void initialize() {
         configureColumns();
         loadClients();
+        clientsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selectedClient) -> {
+            if (selectedClient != null) {
+                txtIdClient.setText(selectedClient.getId());
+                txtNameClient.setText(selectedClient.getName());
+                txtEmailClient.setText(selectedClient.getEmail());
+                txtPhoneClient.setText(selectedClient.getPhone());
+            }
+        });
     }
 
     private void configureColumns() {
