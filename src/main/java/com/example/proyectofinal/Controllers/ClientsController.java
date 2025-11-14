@@ -1,6 +1,7 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.Client;
+import com.example.proyectofinal.Models.GestionUsuarios;
 import com.example.proyectofinal.Models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +37,19 @@ public class ClientsController {
     private TableColumn<Client, String> colEmailClients;
 
     @FXML
+    private TextField txtIdClient;
+    @FXML
+    private TextField txtNameClient;
+    @FXML
+    private TextField txtPasswordClient;
+    @FXML
+    private TextField txtEmailClient;
+    @FXML
+    private TextField txtAddressClient;
+    @FXML
+    private TextField txtPhoneClient;
+
+    @FXML
     private Button btnModifyClient;
 
     @FXML
@@ -43,12 +57,26 @@ public class ClientsController {
 
     private ObservableList<Client> clientsObservable;
 
+    private GestionUsuarios gestor;
+
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
+
     private static final String USERS_FILE = "usuarios.txt";
 
     @FXML
     public void initialize() {
         configureColumns();
         loadClients();
+        clientsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selectedClient) -> {
+            if (selectedClient != null) {
+                txtIdClient.setText(selectedClient.getId());
+                txtNameClient.setText(selectedClient.getName());
+                txtEmailClient.setText(selectedClient.getEmail());
+                txtPhoneClient.setText(selectedClient.getPhone());
+            }
+        });
     }
 
     private void configureColumns() {
@@ -61,68 +89,43 @@ public class ClientsController {
     }
 
     private void loadClients() {
-        List<Client> clients = readClientsFromFile();
-        clientsObservable = FXCollections.observableArrayList(clients);
-        clientsTable.setItems(clientsObservable);
-    }
-
-    private List<Client> readClientsFromFile() {
-        List<Client> clients = new ArrayList<>();
-        File file = new File(USERS_FILE);
-
-        if (!file.exists()) return clients;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length < 5) continue;
-
-                String role = parts[0].trim();
-
-
-                if (role.equalsIgnoreCase("Client")) {
-                    if (parts.length >= 7) {
-                        String id = parts[1].trim();
-                        String password = parts[2].trim();
-                        String name = parts[3].trim();
-                        String email = parts[4].trim();
-                        String address = parts[5].trim();
-                        String phone = parts[6].trim();
-
-                        clients.add(new Client(id, password, name, email, address, phone));
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return clients;
+        clientsTable.setItems(FXCollections.observableArrayList(gestor.getClientList()));
     }
 
     @FXML
     private void onModifyClient() {
         Client selected = clientsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Warning", "Please select a client to modify.", Alert.AlertType.WARNING);
+            showAlert("Warning", "Please select a client.", Alert.AlertType.WARNING);
             return;
         }
 
-        showAlert("Info", "Modify function not implemented yet.", Alert.AlertType.INFORMATION);
+        selected.setId(txtIdClient.getText());
+        selected.setName(txtNameClient.getText());
+        selected.setPassword(txtPasswordClient.getText());
+        selected.setEmail(txtEmailClient.getText());
+        selected.setAddress(txtAddressClient.getText());
+        selected.setPhone(txtPhoneClient.getText());
+
+        gestor.guardarUsuarios();
+        clientsTable.refresh();
+
+        showAlert("Success", "Client updated successfully!", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     private void onDeleteClient() {
         Client selected = clientsTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Warning", "Please select a client to delete.", Alert.AlertType.WARNING);
+            showAlert("Warning", "Please select a client.", Alert.AlertType.WARNING);
             return;
         }
 
-        clientsObservable.remove(selected);
-        saveClientsToFile();
-        showAlert("Success", "Client deleted successfully.", Alert.AlertType.INFORMATION);
+        gestor.getClientList().remove(selected);
+        gestor.guardarUsuarios();
+        loadClients();
+
+        showAlert("Success", "Client deleted.", Alert.AlertType.INFORMATION);
     }
 
     private void saveClientsToFile() {
