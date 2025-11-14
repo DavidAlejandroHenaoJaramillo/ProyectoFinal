@@ -35,21 +35,25 @@ public class CashierController {
         layoutCashier.getChildren().setAll(root);
     }
     @FXML private void showClients () throws IOException {
-        VBox viewClients = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
+        Parent viewClients = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
         layoutCashier.getChildren().setAll(viewClients);
     }
+
     @FXML private void showCheckBalance() throws IOException {
-        VBox viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
+        Parent viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
         layoutCashier.getChildren().setAll(viewCheckBalance);
     }
+
     @FXML private void showDeposit () throws IOException {
-        VBox viewDeposit = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Deposit.fxml"));
+        Parent viewDeposit = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Deposit.fxml"));
         layoutCashier.getChildren().setAll(viewDeposit);
     }
+
     @FXML private void showTransfers() throws IOException {
-        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CashierTransfer.fxml"));
+        Parent viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Transfer.fxml"));
         layoutCashier.getChildren().setAll(viewTransfers);
     }
+
 
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
