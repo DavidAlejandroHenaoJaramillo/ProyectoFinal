@@ -34,9 +34,19 @@ public class CashierController {
         controller.setGestor(gestor);
         layoutCashier.getChildren().setAll(root);
     }
-    @FXML private void showClients () throws IOException {
-        VBox viewClients = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
-        layoutCashier.getChildren().setAll(viewClients);
+    @FXML private void showClients() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
+            Parent root = loader.load();
+
+            ClientsController controller = loader.getController();
+            controller.setGestor(gestor); // <--- MUY IMPORTANTE
+
+            layoutCashier.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML private void showCheckBalance() throws IOException {
         VBox viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
