@@ -89,8 +89,7 @@ public class EmployeesController {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Example format:
-                // Cashier,1094909736,654321,Luna Sofia Oviedo,lunas.oviedor@uqvirtual.edu.co,01
+
                 String[] parts = line.split(",");
                 if (parts.length < 5) continue;
 
@@ -100,7 +99,6 @@ public class EmployeesController {
                 String name = parts[3].trim();
                 String email = parts[4].trim();
 
-                // Only add Admins and Cashiers (ignore Clients)
                 if (role.equalsIgnoreCase("Admin") && parts.length >= 6) {
                     String department = parts[5].trim();
                     users.add(new Admin(id, password, name, email, department));
@@ -124,7 +122,6 @@ public class EmployeesController {
             return;
         }
 
-        // TODO: Add modify logic (optional)
         showAlert("Info", "Modify function not implemented yet.", Alert.AlertType.INFORMATION);
     }
 

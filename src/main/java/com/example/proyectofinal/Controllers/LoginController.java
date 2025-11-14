@@ -24,7 +24,7 @@ public class LoginController {
 
     private ArrayList<User> userList = new ArrayList<>();
 
-    private GestionUsuarios gestor = new GestionUsuarios();
+    private GestionUsuarios gestor =  new GestionUsuarios();
 
     @FXML
     public void initialize() {
@@ -95,7 +95,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/ClientView.fxml"));
             Parent root = loader.load();
 
-            ClientViewController controller =loader.getController();
+            ClientViewController controller = loader.getController();
             controller.setClient(client);
             controller.setGestor(gestor);
 

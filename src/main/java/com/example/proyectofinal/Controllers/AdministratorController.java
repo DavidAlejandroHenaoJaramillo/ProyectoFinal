@@ -24,8 +24,7 @@ public class AdministratorController {
     private Admin admin;
     private GestionUsuarios gestor;
 
-
-    public void setGestor (GestionUsuarios gestor){
+    public void setGestor (GestionUsuarios gestor) {
         this.gestor = gestor;
     }
 

@@ -32,8 +32,6 @@ public class AdminRegistrationController {
         this.gestor = gestor;
     }
 
-
-
     @FXML private void registerAdmin () {
         String idAdmin = txtIdAdmin.getText();
         String nameAdmin = txtNameAdmin.getText();

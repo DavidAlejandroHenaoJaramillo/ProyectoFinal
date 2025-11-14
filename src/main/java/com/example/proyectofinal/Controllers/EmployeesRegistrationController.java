@@ -32,8 +32,11 @@ public class EmployeesRegistrationController {
     @FXML
     private AnchorPane layoutAdmin;
 
-    private GestionUsuarios gestor = new GestionUsuarios();
+    private GestionUsuarios gestor;
 
+    public void setGestor (GestionUsuarios gestor){
+        this.gestor = gestor;
+    }
 
 
     @FXML private void registerEmployee () {
