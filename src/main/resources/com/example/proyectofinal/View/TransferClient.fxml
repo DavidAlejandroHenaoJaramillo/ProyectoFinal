@@ -10,7 +10,7 @@
             <children>
                 <TextField fx:id="txtAccountNumber" layoutX="67.0" layoutY="213.0" prefHeight="26.0" prefWidth="458.0" promptText="Enter the account number" />
                 <TextField fx:id="txtAmountDeposit" layoutX="67.0" layoutY="278.0" prefHeight="26.0" prefWidth="458.0" promptText="0.00" />
-            <ComboBox editable="true" layoutX="67.0" layoutY="140.0" prefHeight="26.0" prefWidth="458.0" promptText="select your corresponding account" />
+            <ComboBox fx:id="comboOriginAccount" editable="true" layoutX="67.0" layoutY="140.0" prefHeight="26.0" prefWidth="458.0" promptText="select your corresponding account" />
                 <Label layoutX="67.0" layoutY="248.0" text="Amount to transfer" textFill="WHITE">
                     <font>
                         <Font name="Arial Black" size="15.0" />

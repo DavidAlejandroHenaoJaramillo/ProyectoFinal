@@ -1,47 +1,61 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.AccountArrange;
+import com.example.proyectofinal.Models.Client;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class TransferClientController {
 
     @FXML
-    private TextField txtOriginAccount;
+    private ComboBox<String> comboOriginAccount;
 
     @FXML
-    private TextField txtDestinationAccount;
+    private TextField txtAccountNumber;
 
     @FXML
-    private TextField txtAmount;
+    private TextField txtAmountDeposit;
 
     @FXML
-    private Button btnTransfer;
+    private Button btnMakeDeposit;
+
+    @FXML
+    private Button btnCancelTransfer;
 
     private final AccountArrange accountArrange = new AccountArrange();
+    private Client client;
+
+    public void setClient(Client client) {
+        this.client = client;
+        loadClientAccounts();
+    }
 
     @FXML
     public void initialize() {
         accountArrange.loadAccounts();
 
-        btnTransfer.setOnAction(event -> handleTransfer());
+        btnMakeDeposit.setOnAction(event -> performTransfer());
+        btnCancelTransfer.setOnAction(event -> clearFields());
     }
 
-    private void handleTransfer() {
+    private void loadClientAccounts() {
+        comboOriginAccount.getItems().clear();
 
-        String origin = txtOriginAccount.getText().trim();
-        String dest = txtDestinationAccount.getText().trim();
-        String amountText = txtAmount.getText().trim();
+        accountArrange.getClientAccounts(client.getId())
+                .forEach(account -> comboOriginAccount.getItems().add(account.getAccountNumber()));
+    }
 
-        if (origin.isEmpty() || dest.isEmpty() || amountText.isEmpty()) {
+    private void performTransfer() {
+        String origin = comboOriginAccount.getValue();
+        String dest = txtAccountNumber.getText().trim();
+        String amountText = txtAmountDeposit.getText().trim();
+
+        if (origin == null || dest.isEmpty() || amountText.isEmpty()) {
             showAlert("Error", "All fields must be filled.");
             return;
         }
 
         double amount;
-
         try {
             amount = Double.parseDouble(amountText);
         } catch (NumberFormatException e) {
@@ -51,11 +65,16 @@ public class TransferClientController {
 
         boolean success = accountArrange.transfer(origin, dest, amount);
 
-        if (success) {
-            showAlert("Success", "Transfer successful.");
-        } else {
+        if (success)
+            showAlert("Success", "Transfer completed successfully.");
+        else
             showAlert("Error", "Transfer failed.");
-        }
+    }
+
+    private void clearFields() {
+        comboOriginAccount.setValue(null);
+        txtAccountNumber.clear();
+        txtAmountDeposit.clear();
     }
 
     private void showAlert(String title, String msg) {

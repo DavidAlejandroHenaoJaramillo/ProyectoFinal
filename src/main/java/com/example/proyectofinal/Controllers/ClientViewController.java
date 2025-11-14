@@ -41,10 +41,18 @@ public class ClientViewController {
         VBox viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
         layoutClient.getChildren().setAll(viewCheckBalance);
     }
-    @FXML private void showTransferView () throws IOException {
-        VBox viewTransferClient = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/TransferClient.fxml"));
-        layoutClient.getChildren().setAll(viewTransferClient);
+    @FXML
+    private void showTransferView() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/TransferClient.fxml"));
+        Parent newView = loader.load();
+
+        TransferClientController controller = loader.getController();
+        controller.setClient(client);
+
+        layoutClient.getChildren().setAll(newView);
     }
+
+
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
         Parent root = loader.load();
