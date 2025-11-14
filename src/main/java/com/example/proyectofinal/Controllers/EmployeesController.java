@@ -2,17 +2,13 @@ package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.Admin;
 import com.example.proyectofinal.Models.Cashier;
+import com.example.proyectofinal.Models.GestionUsuarios;
 import com.example.proyectofinal.Models.User;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.beans.property.SimpleStringProperty;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeesController {
 
@@ -38,19 +34,47 @@ public class EmployeesController {
     private TableColumn<User, String> colRoleEmployees;
 
     @FXML
+    private TextField txtIdEmployee;
+    @FXML
+    private TextField txtNameEmployee;
+    @FXML
+    private TextField txtPasswordEmployee;
+    @FXML
+    private TextField txtEmailEmployee;
+    @FXML
+    private TextField txtWorkerId;
+
+    @FXML
     private Button btnModifyEmployee;
 
     @FXML
     private Button btbnDeleteEmployee;
 
-    private ObservableList<User> employeesObservable;
+    private GestionUsuarios gestor;
 
-    private static final String USERS_FILE = "usuarios.txt";
+    public void setGestor(GestionUsuarios gestor) {
+        this.gestor = gestor;
+        loadEmployees();
+    }
 
     @FXML
     public void initialize() {
         configureColumns();
-        loadEmployees();
+
+        employeeTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selected) -> {
+            if (selected != null) {
+                txtIdEmployee.setText(selected.getId());
+                txtNameEmployee.setText(selected.getName());
+                txtPasswordEmployee.setText(selected.getPassword());
+                txtEmailEmployee.setText(selected.getEmail());
+
+                if (selected instanceof Admin admin) {
+                    txtWorkerId.setText(admin.getDepartment());
+                } else if (selected instanceof Cashier cashier) {
+                    txtWorkerId.setText(cashier.getWorkerId());
+                }
+            }
+        });
     }
 
     private void configureColumns() {
@@ -65,94 +89,56 @@ public class EmployeesController {
                 return new SimpleStringProperty(admin.getDepartment());
             } else if (user instanceof Cashier cashier) {
                 return new SimpleStringProperty(cashier.getWorkerId());
-            } else {
-                return new SimpleStringProperty("");
             }
+            return new SimpleStringProperty("");
         });
 
-        colRoleEmployees.setCellValueFactory(data ->
-                new SimpleStringProperty(data.getValue().getRolDescription()));
+        colRoleEmployees.setCellValueFactory(u ->
+                new SimpleStringProperty(u.getValue().getRolDescription()));
     }
 
     private void loadEmployees() {
-        List<User> employees = readUsersFromFile();
-        employeesObservable = FXCollections.observableArrayList(employees);
-        employeeTable.setItems(employeesObservable);
-    }
-
-    private List<User> readUsersFromFile() {
-        List<User> users = new ArrayList<>();
-        File file = new File(USERS_FILE);
-
-        if (!file.exists()) return users;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-
-                String[] parts = line.split(",");
-                if (parts.length < 5) continue;
-
-                String role = parts[0].trim();
-                String id = parts[1].trim();
-                String password = parts[2].trim();
-                String name = parts[3].trim();
-                String email = parts[4].trim();
-
-                if (role.equalsIgnoreCase("Admin") && parts.length >= 6) {
-                    String department = parts[5].trim();
-                    users.add(new Admin(id, password, name, email, department));
-                } else if (role.equalsIgnoreCase("Cashier") && parts.length >= 6) {
-                    String workerId = parts[5].trim();
-                    users.add(new Cashier(id, password, name, email, workerId));
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return users;
+        employeeTable.setItems(FXCollections.observableArrayList(gestor.getAdminList()));
+        employeeTable.getItems().addAll(gestor.getCashierList());
     }
 
     @FXML
-    private void onModifyEmployee() {
+    private void onModifyEmployees() {
         User selected = employeeTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Warning", "Please select an employee to modify.", Alert.AlertType.WARNING);
+            showAlert("Warning", "Please select an employee.", Alert.AlertType.WARNING);
             return;
         }
 
-        showAlert("Info", "Modify function not implemented yet.", Alert.AlertType.INFORMATION);
+        selected.setId(txtIdEmployee.getText());
+        selected.setName(txtNameEmployee.getText());
+        selected.setPassword(txtPasswordEmployee.getText());
+        selected.setEmail(txtEmailEmployee.getText());
+
+        gestor.guardarUsuarios();
+        employeeTable.refresh();
+
+        showAlert("Success", "Employee updated successfully!", Alert.AlertType.INFORMATION);
     }
 
     @FXML
-    private void onDeleteEmployee() {
+    private void onDeleteEmployees() {
         User selected = employeeTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("Warning", "Please select an employee to delete.", Alert.AlertType.WARNING);
+            showAlert("Warning", "Please select an employee.", Alert.AlertType.WARNING);
             return;
         }
 
-        employeesObservable.remove(selected);
-        saveUsersToFile();
-        showAlert("Success", "Employee deleted successfully.", Alert.AlertType.INFORMATION);
-    }
-
-    private void saveUsersToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(USERS_FILE))) {
-            for (User user : employeesObservable) {
-                if (user instanceof Admin admin) {
-                    writer.write(String.join(",", "Admin", admin.getId(), admin.getPassword(),
-                            admin.getName(), admin.getEmail(), admin.getDepartment()));
-                } else if (user instanceof Cashier cashier) {
-                    writer.write(String.join(",", "Cashier", cashier.getId(), cashier.getPassword(),
-                            cashier.getName(), cashier.getEmail(), cashier.getWorkerId()));
-                }
-                writer.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (selected instanceof Admin) {
+            gestor.getAdminList().remove(selected);
+        } else if (selected instanceof Cashier) {
+            gestor.getCashierList().remove(selected);
         }
+
+        gestor.guardarUsuarios();
+        loadEmployees();
+
+        showAlert("Success", "Employee deleted.", Alert.AlertType.INFORMATION);
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {

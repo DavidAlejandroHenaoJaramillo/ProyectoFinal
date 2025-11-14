@@ -61,6 +61,7 @@ public class ClientsController {
 
     public void setGestor (GestionUsuarios gestor){
         this.gestor = gestor;
+        loadClients();
     }
 
     private static final String USERS_FILE = "usuarios.txt";
@@ -68,13 +69,15 @@ public class ClientsController {
     @FXML
     public void initialize() {
         configureColumns();
-        loadClients();
+
         clientsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, selectedClient) -> {
             if (selectedClient != null) {
                 txtIdClient.setText(selectedClient.getId());
                 txtNameClient.setText(selectedClient.getName());
                 txtEmailClient.setText(selectedClient.getEmail());
                 txtPhoneClient.setText(selectedClient.getPhone());
+                txtPasswordClient.setText(selectedClient.getPassword());
+                txtAddressClient.setText(selectedClient.getAddress());
             }
         });
     }

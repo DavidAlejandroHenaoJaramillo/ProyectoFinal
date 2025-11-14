@@ -34,26 +34,32 @@ public class CashierController {
         controller.setGestor(gestor);
         layoutCashier.getChildren().setAll(root);
     }
-    @FXML private void showClients () throws IOException {
-        Parent viewClients = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
-        layoutCashier.getChildren().setAll(viewClients);
-    }
+    @FXML private void showClients() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
+            Parent root = loader.load();
 
+            ClientsController controller = loader.getController();
+            controller.setGestor(gestor); // <--- MUY IMPORTANTE
+
+            layoutCashier.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML private void showCheckBalance() throws IOException {
-        Parent viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
+        VBox viewCheckBalance = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
         layoutCashier.getChildren().setAll(viewCheckBalance);
     }
-
     @FXML private void showDeposit () throws IOException {
-        Parent viewDeposit = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Deposit.fxml"));
+        VBox viewDeposit = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Deposit.fxml"));
         layoutCashier.getChildren().setAll(viewDeposit);
     }
-
     @FXML private void showTransfers() throws IOException {
-        Parent viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Transfer.fxml"));
+        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CashierTransfer.fxml"));
         layoutCashier.getChildren().setAll(viewTransfers);
     }
-
 
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
