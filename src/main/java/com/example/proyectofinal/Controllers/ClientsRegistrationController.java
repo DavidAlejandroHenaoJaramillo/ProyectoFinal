@@ -1,16 +1,11 @@
 package com.example.proyectofinal.Controllers;
 
-import com.example.proyectofinal.Models.Cashier;
-import com.example.proyectofinal.Models.Client;
-import com.example.proyectofinal.Models.GestionUsuarios;
+import com.example.proyectofinal.Models.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -36,6 +31,10 @@ public class ClientsRegistrationController {
     private Button btnRegisterClient;
     @FXML
     private AnchorPane layoutAdmin;
+    @FXML
+    private ComboBox<String> cmbAccountType;
+    @FXML
+    private TextField txtOpeningBalance;
 
     private GestionUsuarios gestor;
 
@@ -43,28 +42,71 @@ public class ClientsRegistrationController {
         this.gestor = gestor;
     }
 
-    @FXML private void registerClient () {
+    private ManagementAccount accountManager;
+
+    public void setAccountManager (ManagementAccount accountManager){
+        this.accountManager = accountManager;
+    }
+
+    @FXML
+    public void initialize() {
+        cmbAccountType.getItems().addAll("SAVING", "CHECKING", "BUSINESS");
+    }
+
+    @FXML
+    private void registerClient() {
+
         String idClient = txtIdClient.getText();
         String nameClient = txtNameClient.getText();
         String passwordClient = txtPasswordClient.getText();
         String emailClient = txtEmailClient.getText();
         String addressClient = txtAddressClient.getText();
         String phoneClient = txtPhoneClient.getText();
+        String accountType = cmbAccountType.getValue();
+        String openingBalanceText = txtOpeningBalance.getText();
 
-        if(!validateFields()){
+        if (!validateFields()) {
             return;
         }
-        Client client = new Client(idClient,passwordClient , nameClient , emailClient , addressClient , phoneClient);
+
+        if (accountType == null) {
+            showAlertError("Error", "Please select an account type.");
+            return;
+        }
+
+        double openingBalance;
+        try {
+            openingBalance = Double.parseDouble(openingBalanceText);
+            if (openingBalance < 0) {
+                showAlertError("Error", "Opening balance must be positive.");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showAlertError("Error", "Invalid opening balance.");
+            return;
+        }
+
+        Client client = new Client(idClient, passwordClient, nameClient, emailClient, addressClient, phoneClient);
         gestor.addClient(client);
-        gestor.guardarUsuarios();
-        showAlertInformation("Success" , "Client registered successfully");
+
+        Account newAccount = accountManager.createAccount(idClient, accountType, openingBalance);
+        accountManager.addAccount(newAccount);
+
+        showAlertInformation(
+                "Success",
+                "Client and account registered successfully.\nAccount number: " + newAccount.getAccountNumber()
+        );
+
         clearFields();
+        cmbAccountType.getSelectionModel().clearSelection();
     }
+
 
     private boolean validateFields(){
         if(txtIdClient.getText().trim().isEmpty() || txtPasswordClient.getText().trim().isEmpty()
                 || txtNameClient.getText().trim().isEmpty() || txtEmailClient.getText().trim().isEmpty(
-        ) || txtAddressClient.getText().trim().isEmpty()|| txtPhoneClient.getText().trim().isEmpty()){
+        ) || txtAddressClient.getText().trim().isEmpty()|| txtPhoneClient.getText().trim().isEmpty() ||
+                txtOpeningBalance.getText().trim().isEmpty()){
             showAlertError("Error", "Please fill all the fields");
             return false;
         }
@@ -79,6 +121,8 @@ public class ClientsRegistrationController {
         txtAddressClient.clear();
         txtIdClient.clear();
         txtPhoneClient.clear();
+        txtOpeningBalance.clear();
+
     }
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
