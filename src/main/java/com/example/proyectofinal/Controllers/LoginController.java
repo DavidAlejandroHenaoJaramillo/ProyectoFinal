@@ -26,6 +26,7 @@ public class LoginController {
 
     private GestionUsuarios gestor =  new GestionUsuarios();
 
+
     @FXML
     public void initialize() {
 
@@ -143,6 +144,7 @@ public class LoginController {
             CashierController controller =loader.getController();
             controller.setCashier(cashier);
             controller.setGestor(gestor);
+            controller.setAccountManager(new ManagementAccount());
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
