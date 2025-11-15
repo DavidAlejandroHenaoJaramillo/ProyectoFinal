@@ -164,7 +164,7 @@ public class AccountArrange {
 
         if (account.deposit(amount)) {
 
-            // 📌 Registrar movimiento
+
             movementArrange.addMovement(
                     accountNumber,
                     "DEPOSIT",
@@ -186,7 +186,7 @@ public class AccountArrange {
 
         if (account.withdraw(amount)) {
 
-            // 📌 Registrar movimiento
+
             movementArrange.addMovement(
                     accountNumber,
                     "WITHDRAW",
@@ -271,6 +271,7 @@ public class AccountArrange {
         }
         saveAccounts();
     }
+
 
     public boolean accountExists(String accountNumber) {
         return findAccount(accountNumber) != null;
