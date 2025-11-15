@@ -65,10 +65,11 @@ public class TransferClientController {
 
         boolean success = accountArrange.transfer(origin, dest, amount);
 
-        if (success)
+        if (success){
             showAlert("Success", "Transfer completed successfully.");
-        else
-            showAlert("Error", "Transfer failed.");
+        clearFields();}
+        else{
+            showAlert("Error", "Transfer failed.");}
     }
 
     private void clearFields() {

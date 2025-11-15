@@ -49,10 +49,11 @@ public class DepositController {
 
         boolean success = accountArrange.deposit(accountNumber, amount);
 
-        if (success)
+        if (success){
             showAlert("Success", "Deposit completed successfully.");
-        else
-            showAlert("Error", "Deposit failed. Check the account number.");
+            clearFields();}
+        else{
+            showAlert("Error", "Deposit failed. Check the account number.");}
     }
 
     private void clearFields() {
