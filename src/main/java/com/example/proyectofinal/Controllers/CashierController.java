@@ -3,6 +3,7 @@ package com.example.proyectofinal.Controllers;
 import com.example.proyectofinal.Models.Admin;
 import com.example.proyectofinal.Models.Cashier;
 import com.example.proyectofinal.Models.GestionUsuarios;
+import com.example.proyectofinal.Models.ManagementAccount;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -57,7 +58,7 @@ public class CashierController {
         layoutCashier.getChildren().setAll(viewDeposit);
     }
     @FXML private void showTransfers() throws IOException {
-        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/CashierTransfer.fxml"));
+        VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Transfer.fxml"));
         layoutCashier.getChildren().setAll(viewTransfers);
     }
 
