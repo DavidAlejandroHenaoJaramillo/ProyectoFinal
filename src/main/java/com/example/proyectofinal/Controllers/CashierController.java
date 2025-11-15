@@ -33,7 +33,6 @@ public class CashierController {
             controller.setGestor(gestor);
             controller.setAccountArrange(accountArrange);
             layoutCashier.getChildren().setAll(root);
-            setAnchors(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -46,7 +45,6 @@ public class CashierController {
             ClientsController controller = loader.getController();
             controller.setGestor(gestor);
             layoutCashier.getChildren().setAll(root);
-            setAnchors(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,12 +52,11 @@ public class CashierController {
 
     @FXML private void showCheckBalance() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/CheckBalanceCashier.fxml"));
             Parent root = loader.load();
-            CheckBalanceController controller = loader.getController();
+            CheckBalanceCashierController controller = loader.getController();
             controller.setAccountArrange(accountArrange);
             layoutCashier.getChildren().setAll(root);
-            setAnchors(root);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,7 +69,7 @@ public class CashierController {
             DepositController controller = loader.getController();
             controller.setAccountArrange(accountArrange);
             layoutCashier.getChildren().setAll(root);
-            setAnchors(root);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,7 +82,7 @@ public class CashierController {
             TransferController controller = loader.getController();
             controller.setAccountArrange(accountArrange);
             layoutCashier.getChildren().setAll(root);
-            setAnchors(root);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,10 +110,4 @@ public class CashierController {
         usernameCashier.setText(cashier.getName() + " " + cashier.getId());
     }
 
-    private void setAnchors(Parent root) {
-        AnchorPane.setTopAnchor(root, 0.0);
-        AnchorPane.setBottomAnchor(root, 0.0);
-        AnchorPane.setLeftAnchor(root, 0.0);
-        AnchorPane.setRightAnchor(root, 0.0);
-    }
 }

@@ -46,7 +46,6 @@ public class ClientViewController {
         CheckBalanceController controller = loader.getController();
         controller.setClient(client);
         controller.setAccountArrange(accountArrange);
-        setAnchors(root);
         layoutClient.getChildren().setAll(root);
     }
 
@@ -58,8 +57,6 @@ public class ClientViewController {
         TransferClientController controller = loader.getController();
         controller.setClient(client);
         controller.setAccountArrange(accountArrange);
-
-        setAnchors(root);
         layoutClient.getChildren().setAll(root);
     }
 
@@ -75,10 +72,4 @@ public class ClientViewController {
         ((Stage) layoutClient.getScene().getWindow()).close();
     }
 
-    private void setAnchors(Parent root){
-        AnchorPane.setTopAnchor(root, 0.0);
-        AnchorPane.setBottomAnchor(root, 0.0);
-        AnchorPane.setLeftAnchor(root, 0.0);
-        AnchorPane.setRightAnchor(root, 0.0);
-    }
 }

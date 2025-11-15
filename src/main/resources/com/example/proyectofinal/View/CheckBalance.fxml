@@ -16,7 +16,7 @@
                   <Font name="Baskerville Old Face" size="38.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="194.0" layoutY="102.0" text="The number account" textFill="#efefef">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="236.0" layoutY="100.0" text="The account" textFill="#efefef">
                <font>
                   <Font name="Bell MT" size="25.0" />
                </font>
