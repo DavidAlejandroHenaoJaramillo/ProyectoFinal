@@ -119,6 +119,15 @@ public class AccountArrange {
         return saveAccounts();
     }
 
+    public Account findAccount(String accountNumber) {
+        for (Account acc : accountsList ) {
+            if (acc.getAccountNumber().equals(accountNumber)) {
+                return acc;
+            }
+        }
+        return null;
+    }
+
     public boolean deleteAccount(String accountNumber) {
         accountsList.removeIf(acc -> acc.getAccountNumber().equals(accountNumber));
         return saveAccounts();
@@ -169,7 +178,6 @@ public class AccountArrange {
         movementArrange.addMovement(destinationNumber, "TRANSFER_IN", originNumber, amount);
 
         if (!saveAccounts()) {
-            // rollback
             origin.setBalance(originBalanceBefore);
             destination.setBalance(destinationBalanceBefore);
             return false;
