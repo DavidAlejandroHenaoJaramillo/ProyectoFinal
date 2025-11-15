@@ -20,96 +20,64 @@ public class Account {
         this.transactionVolume = transactionVolume;
     }
 
-    public double getTransactionVolume() {
-        return transactionVolume;
-    }
-
-    public void setTransactionVolume(double transactionVolume) {
-        this.transactionVolume = transactionVolume;
-    }
-
-    public double getOverdraftLimit() {
-        return overdraftLimit;
-    }
-
-    public void setOverdraftLimit(double overdraftLimit) {
-        this.overdraftLimit = overdraftLimit;
-    }
-
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(double interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
-    }
-
-    public String getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
-    }
+    public double getTransactionVolume() { return transactionVolume; }
+    public void setTransactionVolume(double transactionVolume) { this.transactionVolume = transactionVolume; }
+    public double getOverdraftLimit() { return overdraftLimit; }
+    public void setOverdraftLimit(double overdraftLimit) { this.overdraftLimit = overdraftLimit; }
+    public double getInterestRate() { return interestRate; }
+    public void setInterestRate(double interestRate) { this.interestRate = interestRate; }
+    public String getClientId() { return clientId; }
+    public void setClientId(String clientId) { this.clientId = clientId; }
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
+    public String getAccountType() { return accountType; }
+    public void setAccountType(String accountType) { this.accountType = accountType; }
+    public String getAccountNumber() { return accountNumber; }
+    public void setAccountNumber(String accountNumber) { this.accountNumber = accountNumber; }
 
     public boolean deposit (double amount) {
-        if (amount > 0) {
-            this.balance += amount;
-        }
-        if("BUSINESS".equals(this.accountType)) {
+        if (amount <= 0) return false;
+        this.balance += amount;
+        if ("BUSINESS".equalsIgnoreCase(this.accountType)) {
             this.transactionVolume += amount;
         }
         return true;
     }
-    public boolean withdraw(double amount) {
+
+    public boolean withdraw (double amount) {
         if (amount <= 0) return false;
 
-        if (!"CHECKING".equals(this.accountType)) {
-            if (this.balance < amount) return false;
+        if ("CHECKING".equalsIgnoreCase(this.accountType)) {
+            if (this.balance + this.overdraftLimit >= amount) {
+                this.balance -= amount;
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        if (this.balance >= amount) {
             this.balance -= amount;
-            if ("BUSINESS".equals(this.accountType)) this.transactionVolume += amount;
+            if ("BUSINESS".equalsIgnoreCase(this.accountType)) {
+                this.transactionVolume += amount;
+            }
             return true;
         }
 
-        if (this.balance + this.overdraftLimit < amount) return false;
-
-        this.balance -= amount;
-        return true;
+        return false;
     }
 
     public void chargeInterest () {
-        if ("SAVINGS".equals(this.accountType)){
-            double interest = this.balance * (this.interestRate/100);
+        if ("SAVINGS".equalsIgnoreCase(this.accountType) || "SAVING".equalsIgnoreCase(this.accountType)) {
+            double interest = this.balance * (this.interestRate / 100.0);
             this.balance += interest;
         }
     }
+
     public String getInfoSpecific () {
-        switch (this.accountType) {
+        switch (this.accountType.toUpperCase()) {
             case "SAVINGS":
+            case "SAVING":
                 return "Interest rate: " + interestRate + "%";
             case "CHECKING":
                 return "Available overdraft limit: $ " + String.format("%.2f", overdraftLimit);
@@ -119,9 +87,9 @@ public class Account {
                 return "";
         }
     }
+
     @Override
     public String toString() {
-        return accountNumber + " - " + accountType + " -$ " + String.format("%.2f", balance);
+        return accountNumber + " - " + accountType + " - $ " + String.format("%.2f", balance);
     }
-
 }

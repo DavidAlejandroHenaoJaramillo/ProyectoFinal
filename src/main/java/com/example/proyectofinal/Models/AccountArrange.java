@@ -9,7 +9,6 @@ public class AccountArrange {
     private ArrayList<Account> accountsList;
     private static final String FILE_NAME = "accounts.txt";
 
-
     private final MovementArrange movementArrange = new MovementArrange();
 
     public AccountArrange() {
@@ -19,7 +18,6 @@ public class AccountArrange {
     public ArrayList<Account> getAccountsList() {
         return accountsList;
     }
-
 
     public boolean loadAccounts() {
         accountsList.clear();
@@ -31,11 +29,8 @@ public class AccountArrange {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-
                 String[] data = line.split(",");
-
                 if (data.length < 7) continue;
-
                 Account account = new Account(
                         data[0],
                         data[1],
@@ -45,22 +40,17 @@ public class AccountArrange {
                         Double.parseDouble(data[5]),
                         Double.parseDouble(data[6])
                 );
-
                 accountsList.add(account);
             }
-
             return true;
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
 
-
     public boolean saveAccounts() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME))) {
-
             for (Account account : accountsList) {
                 writer.println(
                         account.getAccountNumber() + "," +
@@ -72,34 +62,26 @@ public class AccountArrange {
                                 account.getTransactionVolume()
                 );
             }
-
             return true;
-
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
 
-
     private String generateAccountNumber() {
         String base = String.format("%08d", new Random().nextInt(100000000));
         String accountNumber = "BUQ-" + base;
-
         while (accountExists(accountNumber)) {
             base = String.format("%08d", new Random().nextInt(100000000));
             accountNumber = "BUQ-" + base;
         }
-
         return accountNumber;
     }
 
-
-    public Account findAccount(String accountNumber) {
-        for (Account acc : accountsList) {
-            if (acc.getAccountNumber().equals(accountNumber)) {
-                return acc;
-            }
+    public Account getAccount(String accountNumber) {
+        for (Account a : accountsList) {
+            if (a.getAccountNumber().equals(accountNumber)) return a;
         }
         return null;
     }
@@ -107,24 +89,19 @@ public class AccountArrange {
     public ArrayList<Account> getClientAccounts(String clientId) {
         ArrayList<Account> list = new ArrayList<>();
         for (Account acc : accountsList) {
-            if (acc.getClientId().equals(clientId)) {
-                list.add(acc);
-            }
+            if (acc.getClientId().equals(clientId)) list.add(acc);
         }
         return list;
     }
 
-
     public Account createAccount(String clientId, String type, double initialBalance) {
-
         String accountNumber = generateAccountNumber();
-
         double interest = 0;
         double overdraft = 0;
         double volume = 0;
-
-        switch (type) {
+        switch (type.toUpperCase()) {
             case "SAVINGS":
+            case "SAVING":
                 interest = 2.5;
                 break;
             case "CHECKING":
@@ -134,16 +111,7 @@ public class AccountArrange {
                 volume = 0.0;
                 break;
         }
-
-        return new Account(
-                accountNumber,
-                type,
-                initialBalance,
-                clientId,
-                interest,
-                overdraft,
-                volume
-        );
+        return new Account(accountNumber, type.toUpperCase(), initialBalance, clientId, interest, overdraft, volume);
     }
 
     public boolean addAccount(Account account) {
@@ -156,131 +124,89 @@ public class AccountArrange {
         return saveAccounts();
     }
 
-
     public boolean deposit(String accountNumber, double amount) {
-
-        Account account = findAccount(accountNumber);
+        Account account = getAccount(accountNumber);
         if (account == null) return false;
-
-        if (account.deposit(amount)) {
-
-
-            movementArrange.addMovement(
-                    accountNumber,
-                    "DEPOSIT",
-                    "N/A",
-                    amount
-            );
-
-            return saveAccounts();
-        }
-
-        return false;
+        if (amount <= 0) return false;
+        boolean ok = account.deposit(amount);
+        if (!ok) return false;
+        movementArrange.addMovement(accountNumber, "DEPOSIT", "N/A", amount);
+        return saveAccounts();
     }
-
 
     public boolean withdraw(String accountNumber, double amount) {
-
-        Account account = findAccount(accountNumber);
+        Account account = getAccount(accountNumber);
         if (account == null) return false;
-
-        if (account.withdraw(amount)) {
-
-
-            movementArrange.addMovement(
-                    accountNumber,
-                    "WITHDRAW",
-                    "N/A",
-                    amount
-            );
-
-            return saveAccounts();
-        }
-
-        return false;
+        if (amount <= 0) return false;
+        boolean ok = account.withdraw(amount);
+        if (!ok) return false;
+        movementArrange.addMovement(accountNumber, "WITHDRAW", "N/A", amount);
+        return saveAccounts();
     }
 
-
     public boolean transfer(String originNumber, String destinationNumber, double amount) {
+        if (originNumber == null || destinationNumber == null) return false;
+        if (originNumber.equals(destinationNumber)) return false;
+        if (amount <= 0) return false;
 
-        Account origin = findAccount(originNumber);
-        Account destination = findAccount(destinationNumber);
-
+        Account origin = getAccount(originNumber);
+        Account destination = getAccount(destinationNumber);
         if (origin == null || destination == null) return false;
 
-        double originalBalance = origin.getBalance();
+        if (!canWithdraw(origin, amount)) return false;
 
-        try {
+        double originBalanceBefore = origin.getBalance();
+        double destinationBalanceBefore = destination.getBalance();
 
-            if (origin.withdraw(amount)) {
+        if (!origin.withdraw(amount)) return false;
 
-                if (destination.deposit(amount)) {
-
-
-                    movementArrange.addMovement(
-                            originNumber,
-                            "TRANSFER_OUT",
-                            destinationNumber,
-                            amount
-                    );
-
-
-                    movementArrange.addMovement(
-                            destinationNumber,
-                            "TRANSFER_IN",
-                            originNumber,
-                            amount
-                    );
-
-                    if (!saveAccounts()) {
-                        origin.setBalance(originalBalance);
-                        return false;
-                    }
-
-                    return true;
-
-                } else {
-                    origin.deposit(amount);
-                    return false;
-                }
-            }
-
-        } catch (Exception e) {
-            origin.setBalance(originalBalance);
+        if (!destination.deposit(amount)) {
+            origin.setBalance(originBalanceBefore);
             return false;
         }
 
-        return false;
+        movementArrange.addMovement(originNumber, "TRANSFER_OUT", destinationNumber, amount);
+        movementArrange.addMovement(destinationNumber, "TRANSFER_IN", originNumber, amount);
+
+        if (!saveAccounts()) {
+            // rollback
+            origin.setBalance(originBalanceBefore);
+            destination.setBalance(destinationBalanceBefore);
+            return false;
+        }
+        return true;
     }
 
+    private boolean canWithdraw(Account acc, double amount) {
+        if (acc == null || amount <= 0) return false;
+        if ("CHECKING".equalsIgnoreCase(acc.getAccountType())) {
+            return acc.getBalance() + acc.getOverdraftLimit() >= amount;
+        } else {
+            return acc.getBalance() >= amount;
+        }
+    }
 
     public double checkBalance(String accountNumber) {
-        Account acc = findAccount(accountNumber);
+        Account acc = getAccount(accountNumber);
         return (acc != null) ? acc.getBalance() : -1;
     }
 
-    public Account getAccount(String accountNumber) {
-        return findAccount(accountNumber);
+    public boolean accountExists(String accountNumber) {
+        return getAccount(accountNumber) != null;
     }
 
     public void applySavingsInterest() {
         for (Account acc : accountsList) {
-            if ("SAVINGS".equals(acc.getAccountType())) {
+            if ("SAVINGS".equalsIgnoreCase(acc.getAccountType()) || "SAVING".equalsIgnoreCase(acc.getAccountType())) {
                 acc.chargeInterest();
             }
         }
         saveAccounts();
     }
 
-
-    public boolean accountExists(String accountNumber) {
-        return findAccount(accountNumber) != null;
-    }
-
     public String getAccountInfo(String accountNumber) {
-        Account acc = findAccount(accountNumber);
+        Account acc = getAccount(accountNumber);
         if (acc == null) return "Account not found";
-
         return "Number: " + acc.getAccountNumber() + "\n"
                 + "Type: " + acc.getAccountType() + "\n"
                 + "Balance: $" + String.format("%.2f", acc.getBalance()) + "\n"

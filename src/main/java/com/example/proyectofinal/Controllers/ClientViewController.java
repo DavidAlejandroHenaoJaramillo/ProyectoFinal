@@ -1,5 +1,6 @@
 package com.example.proyectofinal.Controllers;
 
+import com.example.proyectofinal.Models.AccountArrange;
 import com.example.proyectofinal.Models.Client;
 import com.example.proyectofinal.Models.GestionUsuarios;
 import com.example.proyectofinal.Models.ManagementAccount;
@@ -33,14 +34,18 @@ public class ClientViewController {
     public void setGestor(GestionUsuarios gestor){
         this.gestor = gestor;
     }
+    private AccountArrange accountArrange;
+    public void setAccountArrange(AccountArrange accountArrange) {
+        this.accountArrange = accountArrange;
+    }
 
     @FXML
     private void showBalance() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
         Parent root = loader.load();
         CheckBalanceController controller = loader.getController();
-        controller.setManagementAccount(new ManagementAccount());
         controller.setClient(client);
+        controller.setAccountArrange(accountArrange);
         setAnchors(root);
         layoutClient.getChildren().setAll(root);
     }
@@ -52,6 +57,7 @@ public class ClientViewController {
 
         TransferClientController controller = loader.getController();
         controller.setClient(client);
+        controller.setAccountArrange(accountArrange);
 
         setAnchors(root);
         layoutClient.getChildren().setAll(root);

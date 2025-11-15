@@ -1,85 +1,45 @@
 package com.example.proyectofinal.Controllers;
 
 import com.example.proyectofinal.Models.AccountArrange;
-import com.example.proyectofinal.Models.GestionUsuarios;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 
 public class TransferController {
+    @FXML private TextField txtOriginAccount;
+    @FXML private TextField txtDestinationAccount;
+    @FXML private TextField txtAmount;
+    @FXML private Button btnTransfer;
+    @FXML private Button btnCancelTransfer;
 
-    @FXML
-    private TextField txtOriginAccount;
+    private AccountArrange accountArrange;
 
-    @FXML
-    private TextField txtDestinationAccount;
+    public void setAccountArrange(AccountArrange accountArrange){ this.accountArrange = accountArrange; }
 
-    @FXML
-    private TextField txtAmount;
-
-    @FXML
-    private Button btnTransfer;
-
-    @FXML
-    private Button btnCancelTransfer;
-
-    private GestionUsuarios gestor;
-
-    public void setGestor (GestionUsuarios gestor){
-        this.gestor = gestor;
+    @FXML public void initialize() {
+        if (btnTransfer != null) btnTransfer.setOnAction(e -> handleTransfer());
+        if (btnCancelTransfer != null) btnCancelTransfer.setOnAction(e -> clearFields());
+        if (accountArrange != null) accountArrange.loadAccounts();
     }
 
-    private final AccountArrange accountArrange = new AccountArrange();
-
-    @FXML
-    public void initialize() {
-        accountArrange.loadAccounts();
-
-        btnTransfer.setOnAction(event -> handleTransfer());
-        btnCancelTransfer.setOnAction(event -> clearFields());
-    }
-
-    private void clearFields() {
-        txtOriginAccount.clear();
-        txtDestinationAccount.clear();
-        txtAmount.clear();
-    }
+    private void clearFields() { txtOriginAccount.clear(); txtDestinationAccount.clear(); txtAmount.clear(); }
 
     private void handleTransfer() {
         String origin = txtOriginAccount.getText().trim();
         String dest = txtDestinationAccount.getText().trim();
         String amountText = txtAmount.getText().trim();
 
-        if (origin.isEmpty() || dest.isEmpty() || amountText.isEmpty()) {
-            showAlert("Error", "All fields must be filled.");
-            return;
-        }
+        if (origin.isEmpty() || dest.isEmpty() || amountText.isEmpty()) { showAlert("Error", "All fields must be filled."); return; }
 
         double amount;
+        try { amount = Double.parseDouble(amountText); if (amount <= 0) throw new NumberFormatException(); }
+        catch (NumberFormatException e) { showAlert("Error", "Invalid amount."); return; }
 
-        try {
-            amount = Double.parseDouble(amountText);
-        } catch (NumberFormatException e) {
-            showAlert("Error", "Invalid amount.");
-            return;
-        }
-
+        if (accountArrange == null) { showAlert("Error", "Accounts system not available."); return; }
+        accountArrange.loadAccounts();
         boolean success = accountArrange.transfer(origin, dest, amount);
-
-        if (success) {
-            showAlert("Success", "Transfer completed successfully.");
-            clearFields();
-        } else {
-            showAlert("Error", "Transfer could not be completed. Check balances and account numbers.");
-        }
+        if (success) { showAlert("Success", "Transfer completed successfully."); clearFields(); }
+        else showAlert("Error", "Transfer could not be completed. Check balances and account numbers.");
     }
 
-
-    private void showAlert(String title, String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(title);
-        alert.setContentText(msg);
-        alert.show();
-    }
+    private void showAlert(String title, String msg) { Alert alert = new Alert(Alert.AlertType.INFORMATION); alert.setHeaderText(title); alert.setContentText(msg); alert.showAndWait(); }
 }
