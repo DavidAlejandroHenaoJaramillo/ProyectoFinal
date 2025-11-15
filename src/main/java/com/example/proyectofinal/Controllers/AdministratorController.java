@@ -65,7 +65,6 @@ public class AdministratorController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             Parent root = loader.load();
 
-            setAnchors(root);
             layoutAdmin.getChildren().setAll(root);
 
             Object controller = loader.getController();
@@ -78,10 +77,4 @@ public class AdministratorController {
         }
     }
 
-    private void setAnchors(Parent root){
-        AnchorPane.setTopAnchor(root, 0.0);
-        AnchorPane.setBottomAnchor(root, 0.0);
-        AnchorPane.setLeftAnchor(root, 0.0);
-        AnchorPane.setRightAnchor(root, 0.0);
-    }
 }
