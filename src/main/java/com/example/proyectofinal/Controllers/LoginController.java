@@ -26,6 +26,8 @@ public class LoginController {
 
     private GestionUsuarios gestor =  new GestionUsuarios();
 
+    private AccountArrange accountArrange = new AccountArrange();
+
 
     @FXML
     public void initialize() {

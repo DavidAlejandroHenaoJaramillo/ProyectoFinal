@@ -37,10 +37,10 @@ public class AccountArrange {
                 if (data.length < 7) continue;
 
                 Account account = new Account(
-                        data[0],                    // accountNumber
-                        data[1],                    // accountType
+                        data[0],
+                        data[1],
                         Double.parseDouble(data[2]),
-                        data[3],                    // clientId
+                        data[3],
                         Double.parseDouble(data[4]),
                         Double.parseDouble(data[5]),
                         Double.parseDouble(data[6])

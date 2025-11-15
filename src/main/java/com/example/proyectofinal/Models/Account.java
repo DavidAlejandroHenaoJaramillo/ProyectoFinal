@@ -85,31 +85,22 @@ public class Account {
         }
         return true;
     }
-    public boolean withdraw (double amount) {
-        if (amount <= 0) {
-            return false;
-        }
-        if (this.balance < amount) {
-            return false;
-        }
-        this.balance -= amount;
+    public boolean withdraw(double amount) {
+        if (amount <= 0) return false;
 
-        if ("CHECKING".equals(this.accountType)) {
-            if(this.balance + this.overdraftLimit >= amount){
-                this.balance -= amount;
-                return true;
-            }
-            return false;
-        }
-        if(this.balance >= amount){
+        if (!"CHECKING".equals(this.accountType)) {
+            if (this.balance < amount) return false;
             this.balance -= amount;
-            if("BUSINESS".equals(this.accountType)) {
-                this.transactionVolume += amount;
-            }
+            if ("BUSINESS".equals(this.accountType)) this.transactionVolume += amount;
             return true;
         }
-        return false;
+
+        if (this.balance + this.overdraftLimit < amount) return false;
+
+        this.balance -= amount;
+        return true;
     }
+
     public void chargeInterest () {
         if ("SAVINGS".equals(this.accountType)){
             double interest = this.balance * (this.interestRate/100);
