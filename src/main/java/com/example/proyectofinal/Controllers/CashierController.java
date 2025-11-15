@@ -28,21 +28,31 @@ public class CashierController {
         this.gestor = gestor;
     }
 
-    @FXML private void showRegisterClient () throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/ClientsRegistration.fxml"));
-        Parent root = loader.load();
-        ClientsRegistrationController controller = loader.getController();
-        controller.setGestor(gestor);
-        layoutCashier.getChildren().setAll(root);
+    private ManagementAccount managementAccount = new ManagementAccount();
+
+    public void setManagementAccount (ManagementAccount managementAccount){
+        this.managementAccount = managementAccount;
+        }
+
+    @FXML private void showRegisterClient() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/ClientsRegistration.fxml"));
+            Parent root = loader.load();
+            ClientsRegistrationController controller = loader.getController();
+            controller.setGestor(gestor);
+            controller.setAccountManager(managementAccount);
+            layoutCashier.getChildren().setAll(root);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML private void showClients() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Clients.fxml"));
             Parent root = loader.load();
-
             ClientsController controller = loader.getController();
             controller.setGestor(gestor);
-
             layoutCashier.getChildren().setAll(root);
 
         } catch (IOException e) {
@@ -73,6 +83,7 @@ public class CashierController {
     public void setCashier(Cashier cashier) {
         this.cashier = cashier;
         usernameCashier.setText(cashier.getName() + " " + cashier.getId());
+        managementAccount.loadAccounts();
     }
 
 }

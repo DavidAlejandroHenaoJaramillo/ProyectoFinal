@@ -2,6 +2,7 @@ Admin,1119150996,041107,Alejandro Henao Jaramillo,a.henaojaramillo87@gmail.com,S
 Admin,1094909736,301207,Luna Sofia Oviedo Rios,lunas.oviedor@uqvirtual.edu.co,Sales
 Admin,111,123,Jorge Ivan Quintero Lopez,jiquinterol@uniquindio.edu.co,Systems
 Cashier,1094909736,123456,Luna Sofia Oviedo,lunas.oviedor@uqvirtual.edu.co,01
-Cashier,1116149150,2580,Jackson Henaoo,jackhen87@gmail.com,02
-Client,1116435641,8520,Lina Marcela Jaramillo,sahianj87@gmail.com,La huerta,3122053230
-Client,0101,123,PRUEBA,A,S,1
+Cashier,1116149150,2580,Jackson Henao,jackhen87@gmail.com,02
+Client,1116435641,8520,Lina Marcela Jaramillo,sahianj87@gmail.com,3122053230,La huerta
+Client,123,0101,PRUEBA CLIENTE 2,pruebaCliente2@gmail.com,228647913,Brr Granada mz A #31-15
+Client,55555,7410,PRUEBA 3,prueba3@gmail.com,61598742,Brr Laureles, Armenia
