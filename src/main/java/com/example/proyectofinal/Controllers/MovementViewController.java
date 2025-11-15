@@ -96,7 +96,10 @@ public class MovementViewController {
 
     @FXML
     public void onBack() {
-        Stage stage = (Stage) btnBack.getScene().getWindow();
-        stage.close();
+        txtClientId.clear();
+        txtAccountNumber.clear();
+        tblMovements.getItems().clear();
+        tblMovements.getSelectionModel().clearSelection();
     }
+
 }
