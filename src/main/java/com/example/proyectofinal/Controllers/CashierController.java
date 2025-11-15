@@ -10,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -70,6 +71,14 @@ public class CashierController {
     @FXML private void showTransfers() throws IOException {
         VBox viewTransfers = FXMLLoader.load(getClass().getResource("/com/example/proyectofinal/View/Transfer.fxml"));
         layoutCashier.getChildren().setAll(viewTransfers);
+    }
+    @FXML
+    private void showCheckMovements() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/MovementView.fxml"));
+        BorderPane movementsView = loader.load();
+
+        MovementViewController controller = loader.getController();
+        layoutCashier.getChildren().setAll(movementsView);
     }
 
     @FXML private void onLogOut () throws IOException {

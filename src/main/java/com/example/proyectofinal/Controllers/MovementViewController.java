@@ -1,5 +1,7 @@
 package com.example.proyectofinal.Controllers;
 
+import com.example.proyectofinal.Models.Account;
+import com.example.proyectofinal.Models.AccountArrange;
 import com.example.proyectofinal.Models.Movement;
 import com.example.proyectofinal.Models.MovementArrange;
 import javafx.collections.FXCollections;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -15,6 +18,12 @@ public class MovementViewController {
 
     @FXML
     private TableView<Movement> tblMovements;
+
+    @FXML
+    private TextField txtClientId;
+
+    @FXML
+    private TextField txtAccountNumber;
 
     @FXML
     private TableColumn<Movement, String> colDate;
@@ -56,6 +65,33 @@ public class MovementViewController {
 
         tblMovements.setItems(list);
     }
+
+    @FXML
+    public void onSearch() {
+
+        String accountNum = txtAccountNumber.getText().trim();
+        String clientId = txtClientId.getText().trim();
+
+        if (accountNum.isEmpty() || clientId.isEmpty()) {
+            System.out.println("You must fill out both fields");
+            return;
+        }
+
+
+        AccountArrange arrange = new AccountArrange();
+        arrange.loadAccounts();
+        Account acc = arrange.findAccount(accountNum);
+
+        if (acc == null || !acc.getClientId().equals(clientId)) {
+            System.out.println("The account does not exist or does not belong to this client.");
+            tblMovements.setItems(FXCollections.observableArrayList());
+            return;
+        }
+
+
+        loadMovementsOfAccount(accountNum);
+    }
+
 
 
     @FXML
