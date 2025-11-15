@@ -37,10 +37,10 @@ public class AccountArrange {
                 if (data.length < 7) continue;
 
                 Account account = new Account(
-                        data[0],
-                        data[1],
+                        data[0],                    // accountNumber
+                        data[1],                    // accountType
                         Double.parseDouble(data[2]),
-                        data[3],
+                        data[3],                    // clientId
                         Double.parseDouble(data[4]),
                         Double.parseDouble(data[5]),
                         Double.parseDouble(data[6])
@@ -164,6 +164,7 @@ public class AccountArrange {
 
         if (account.deposit(amount)) {
 
+
             movementArrange.addMovement(
                     accountNumber,
                     "DEPOSIT",
@@ -184,6 +185,7 @@ public class AccountArrange {
         if (account == null) return false;
 
         if (account.withdraw(amount)) {
+
 
             movementArrange.addMovement(
                     accountNumber,
@@ -269,6 +271,7 @@ public class AccountArrange {
         }
         saveAccounts();
     }
+
 
     public boolean accountExists(String accountNumber) {
         return findAccount(accountNumber) != null;

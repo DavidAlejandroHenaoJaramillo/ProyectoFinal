@@ -24,6 +24,19 @@ public class MovementArrange {
             e.printStackTrace();
         }
     }
+    public void addMovement(String accountNumber, String type, String relatedAccount, double amount) {
+
+        Movement m = new Movement(
+                java.time.LocalDate.now().toString(),  // Fecha actual
+                type,
+                relatedAccount,
+                amount,
+                accountNumber
+        );
+
+        saveMovement(m);
+    }
+
 
 
     public ArrayList<Movement> loadAllMovements() {
