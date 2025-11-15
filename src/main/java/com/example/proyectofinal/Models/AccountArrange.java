@@ -4,11 +4,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class AccountArrange {
 
     private ArrayList<Account> accountsList;
     private static final String FILE_NAME = "accounts.txt";
+
+
+    private final MovementArrange movementArrange = new MovementArrange();
 
     public AccountArrange() {
         accountsList = new ArrayList<>();
@@ -18,27 +20,27 @@ public class AccountArrange {
         return accountsList;
     }
 
+
     public boolean loadAccounts() {
         accountsList.clear();
         File file = new File(FILE_NAME);
-
         if (!file.exists()) {
             return true;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
-
             while ((line = reader.readLine()) != null) {
+
                 String[] data = line.split(",");
 
                 if (data.length < 7) continue;
 
                 Account account = new Account(
-                        data[0],
-                        data[1],
+                        data[0],                    // accountNumber
+                        data[1],                    // accountType
                         Double.parseDouble(data[2]),
-                        data[3],
+                        data[3],                    // clientId
                         Double.parseDouble(data[4]),
                         Double.parseDouble(data[5]),
                         Double.parseDouble(data[6])
@@ -49,15 +51,12 @@ public class AccountArrange {
 
             return true;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
+
 
     public boolean saveAccounts() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME))) {
@@ -82,6 +81,7 @@ public class AccountArrange {
         }
     }
 
+
     private String generateAccountNumber() {
         String base = String.format("%08d", new Random().nextInt(100000000));
         String accountNumber = "BUQ-" + base;
@@ -94,42 +94,42 @@ public class AccountArrange {
         return accountNumber;
     }
 
+
     public Account findAccount(String accountNumber) {
-        for (Account account : accountsList) {
-            if (account.getAccountNumber().equals(accountNumber)) {
-                return account;
+        for (Account acc : accountsList) {
+            if (acc.getAccountNumber().equals(accountNumber)) {
+                return acc;
             }
         }
         return null;
     }
 
     public ArrayList<Account> getClientAccounts(String clientId) {
-        ArrayList<Account> clientAccounts = new ArrayList<>();
-
-        for (Account account : accountsList) {
-            if (account.getClientId().equals(clientId)) {
-                clientAccounts.add(account);
+        ArrayList<Account> list = new ArrayList<>();
+        for (Account acc : accountsList) {
+            if (acc.getClientId().equals(clientId)) {
+                list.add(acc);
             }
         }
-
-        return clientAccounts;
+        return list;
     }
 
+
     public Account createAccount(String clientId, String type, double initialBalance) {
+
         String accountNumber = generateAccountNumber();
-        double interest = 0.0;
-        double overdraft = 0.0;
-        double volume = 0.0;
+
+        double interest = 0;
+        double overdraft = 0;
+        double volume = 0;
 
         switch (type) {
             case "SAVINGS":
                 interest = 2.5;
                 break;
-
             case "CHECKING":
                 overdraft = 2000000.0;
                 break;
-
             case "BUSINESS":
                 volume = 0.0;
                 break;
@@ -152,48 +152,85 @@ public class AccountArrange {
     }
 
     public boolean deleteAccount(String accountNumber) {
-        accountsList.removeIf(c -> c.getAccountNumber().equals(accountNumber));
+        accountsList.removeIf(acc -> acc.getAccountNumber().equals(accountNumber));
         return saveAccounts();
     }
 
+
     public boolean deposit(String accountNumber, double amount) {
+
         Account account = findAccount(accountNumber);
+        if (account == null) return false;
 
-        if (account == null)
-            return false;
+        if (account.deposit(amount)) {
 
-        if (account.deposit(amount))
+            // 📌 Registrar movimiento
+            movementArrange.addMovement(
+                    accountNumber,
+                    "DEPOSIT",
+                    "N/A",
+                    amount
+            );
+
             return saveAccounts();
+        }
 
         return false;
     }
+
 
     public boolean withdraw(String accountNumber, double amount) {
+
         Account account = findAccount(accountNumber);
+        if (account == null) return false;
 
-        if (account == null)
-            return false;
+        if (account.withdraw(amount)) {
 
-        if (account.withdraw(amount))
+            // 📌 Registrar movimiento
+            movementArrange.addMovement(
+                    accountNumber,
+                    "WITHDRAW",
+                    "N/A",
+                    amount
+            );
+
             return saveAccounts();
+        }
 
         return false;
     }
+
 
     public boolean transfer(String originNumber, String destinationNumber, double amount) {
 
         Account origin = findAccount(originNumber);
         Account destination = findAccount(destinationNumber);
 
-        if (origin == null || destination == null)
-            return false;
+        if (origin == null || destination == null) return false;
 
         double originalBalance = origin.getBalance();
 
         try {
+
             if (origin.withdraw(amount)) {
 
                 if (destination.deposit(amount)) {
+
+
+                    movementArrange.addMovement(
+                            originNumber,
+                            "TRANSFER_OUT",
+                            destinationNumber,
+                            amount
+                    );
+
+
+                    movementArrange.addMovement(
+                            destinationNumber,
+                            "TRANSFER_IN",
+                            originNumber,
+                            amount
+                    );
 
                     if (!saveAccounts()) {
                         origin.setBalance(originalBalance);
@@ -216,13 +253,10 @@ public class AccountArrange {
         return false;
     }
 
+
     public double checkBalance(String accountNumber) {
-        Account account = findAccount(accountNumber);
-
-        if (account != null)
-            return account.getBalance();
-
-        return -1;
+        Account acc = findAccount(accountNumber);
+        return (acc != null) ? acc.getBalance() : -1;
     }
 
     public Account getAccount(String accountNumber) {
@@ -230,9 +264,9 @@ public class AccountArrange {
     }
 
     public void applySavingsInterest() {
-        for (Account account : accountsList) {
-            if ("SAVINGS".equals(account.getAccountType())) {
-                account.chargeInterest();
+        for (Account acc : accountsList) {
+            if ("SAVINGS".equals(acc.getAccountType())) {
+                acc.chargeInterest();
             }
         }
         saveAccounts();
@@ -243,18 +277,12 @@ public class AccountArrange {
     }
 
     public String getAccountInfo(String accountNumber) {
-        Account account = findAccount(accountNumber);
+        Account acc = findAccount(accountNumber);
+        if (acc == null) return "Account not found";
 
-        if (account == null) {
-            return "Account not found";
-        }
-
-        StringBuilder info = new StringBuilder();
-        info.append("Number: ").append(account.getAccountNumber()).append("\n");
-        info.append("Type: ").append(account.getAccountType()).append("\n");
-        info.append("Balance: $").append(String.format("%.2f", account.getBalance())).append("\n");
-        info.append(account.getInfoSpecific());
-
-        return info.toString();
+        return "Number: " + acc.getAccountNumber() + "\n"
+                + "Type: " + acc.getAccountType() + "\n"
+                + "Balance: $" + String.format("%.2f", acc.getBalance()) + "\n"
+                + acc.getInfoSpecific();
     }
 }

@@ -69,10 +69,12 @@ public class TransferController {
 
         if (success) {
             showAlert("Success", "Transfer completed successfully.");
+            clearFields();
         } else {
             showAlert("Error", "Transfer could not be completed. Check balances and account numbers.");
         }
     }
+
 
     private void showAlert(String title, String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
