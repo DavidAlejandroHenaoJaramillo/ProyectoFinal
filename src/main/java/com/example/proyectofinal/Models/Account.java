@@ -89,6 +89,11 @@ public class Account {
         if (amount <= 0) {
             return false;
         }
+        if (this.balance < amount) {
+            return false;
+        }
+        this.balance -= amount;
+
         if ("CHECKING".equals(this.accountType)) {
             if(this.balance + this.overdraftLimit >= amount){
                 this.balance -= amount;

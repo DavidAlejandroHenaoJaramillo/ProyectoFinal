@@ -1,17 +1,15 @@
 package com.example.proyectofinal.Controllers;
 
-import com.example.proyectofinal.Models.AccountArrange;
 import com.example.proyectofinal.Models.Account;
+import com.example.proyectofinal.Models.Client;
+import com.example.proyectofinal.Models.ManagementAccount;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class CheckBalanceController {
 
     @FXML
-    private TextField txtNumberAccount;
+    private ComboBox<String> cmbAccounts;
 
     @FXML
     private Button btnCheckBalance;
@@ -19,26 +17,46 @@ public class CheckBalanceController {
     @FXML
     private Label txtBalance;
 
-    private final AccountArrange accountArrange = new AccountArrange();
+    private ManagementAccount managementAccount;
+    private Client client;
+
+    public void setManagementAccount(ManagementAccount managementAccount) {
+        this.managementAccount = managementAccount;
+        this.managementAccount.loadAccounts();
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+        loadClientAccounts();
+    }
 
     @FXML
     public void initialize() {
-        accountArrange.loadAccounts();
         btnCheckBalance.setOnAction(event -> checkBalance());
     }
 
-    private void checkBalance() {
-        String number = txtNumberAccount.getText().trim();
+    private void loadClientAccounts() {
+        if (client == null || managementAccount == null) return;
 
-        if (number.isEmpty()) {
-            showError("Please enter an account number.");
+        cmbAccounts.getItems().clear();
+
+        for (Account acc : managementAccount.getClientAccount(client.getId())) {
+            cmbAccounts.getItems().add(acc.getAccountNumber());
+        }
+    }
+
+    private void checkBalance() {
+        String selectedAccount = cmbAccounts.getValue();
+
+        if (selectedAccount == null) {
+            showError("Please select an account.");
             return;
         }
 
-        Account account = accountArrange.getAccount(number);
+        Account account = managementAccount.searchAccount(selectedAccount);
 
         if (account == null) {
-            showError("The account number does not exist.");
+            showError("The selected account does not exist.");
             return;
         }
 
