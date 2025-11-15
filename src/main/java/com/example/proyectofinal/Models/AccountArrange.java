@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class AccountArrange {
 
     private ArrayList<Account> accountsList;
@@ -222,6 +223,10 @@ public class AccountArrange {
             return account.getBalance();
 
         return -1;
+    }
+
+    public Account getAccount(String accountNumber) {
+        return findAccount(accountNumber);
     }
 
     public void applySavingsInterest() {
