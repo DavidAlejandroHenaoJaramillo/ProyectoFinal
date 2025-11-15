@@ -38,11 +38,10 @@ public class ClientViewController {
     private void showBalance() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/CheckBalance.fxml"));
         Parent root = loader.load();
-
         CheckBalanceController controller = loader.getController();
-        controller.setClient(client);
         controller.setManagementAccount(new ManagementAccount());
-
+        controller.setClient(client);
+        setAnchors(root);
         layoutClient.getChildren().setAll(root);
     }
 

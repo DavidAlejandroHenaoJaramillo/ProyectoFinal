@@ -37,10 +37,10 @@ public class AccountArrange {
                 if (data.length < 7) continue;
 
                 Account account = new Account(
-                        data[0],                    // accountNumber
-                        data[1],                    // accountType
+                        data[0],
+                        data[1],
                         Double.parseDouble(data[2]),
-                        data[3],                    // clientId
+                        data[3],
                         Double.parseDouble(data[4]),
                         Double.parseDouble(data[5]),
                         Double.parseDouble(data[6])
@@ -164,7 +164,6 @@ public class AccountArrange {
 
         if (account.deposit(amount)) {
 
-            // 📌 Registrar movimiento
             movementArrange.addMovement(
                     accountNumber,
                     "DEPOSIT",
@@ -186,7 +185,6 @@ public class AccountArrange {
 
         if (account.withdraw(amount)) {
 
-            // 📌 Registrar movimiento
             movementArrange.addMovement(
                     accountNumber,
                     "WITHDRAW",

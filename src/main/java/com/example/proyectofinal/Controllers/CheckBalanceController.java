@@ -7,66 +7,44 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class CheckBalanceController {
-
-    @FXML
-    private ComboBox<String> cmbAccounts;
-
-    @FXML
-    private Button btnCheckBalance;
-
-    @FXML
-    private Label txtBalance;
+    @FXML private ComboBox<String> cmbAccounts;
+    @FXML private Button btnCheckBalance;
+    @FXML private Label txtBalance;
 
     private ManagementAccount managementAccount;
     private Client client;
 
     public void setManagementAccount(ManagementAccount managementAccount) {
         this.managementAccount = managementAccount;
-        this.managementAccount.loadAccounts();
+        if (this.managementAccount != null) this.managementAccount.loadAccounts();
+        tryLoadClientAccounts();
     }
 
     public void setClient(Client client) {
         this.client = client;
-        loadClientAccounts();
+        tryLoadClientAccounts();
     }
 
     @FXML
     public void initialize() {
-        btnCheckBalance.setOnAction(event -> checkBalance());
+        btnCheckBalance.setOnAction(e -> checkBalance());
     }
 
-    private void loadClientAccounts() {
-        if (client == null || managementAccount == null) return;
-
+    private void tryLoadClientAccounts() {
+        if (this.client == null || this.managementAccount == null) return;
         cmbAccounts.getItems().clear();
-
         for (Account acc : managementAccount.getClientAccount(client.getId())) {
             cmbAccounts.getItems().add(acc.getAccountNumber());
         }
     }
 
     private void checkBalance() {
-        String selectedAccount = cmbAccounts.getValue();
-
-        if (selectedAccount == null) {
-            showError("Please select an account.");
-            return;
-        }
-
-        Account account = managementAccount.searchAccount(selectedAccount);
-
-        if (account == null) {
-            showError("The selected account does not exist.");
-            return;
-        }
-
-        txtBalance.setText(String.format("%.2f", account.getBalance()));
+        String selected = cmbAccounts.getValue();
+        if (selected == null) { showError("Please select an account."); return; }
+        Account acc = managementAccount.searchAccount(selected);
+        if (acc == null) { showError("Account not found."); return; }
+        txtBalance.setText(String.format("%.2f", acc.getBalance()));
     }
-
-    private void showError(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("Error");
-        alert.setContentText(msg);
-        alert.show();
-    }
+    private void showError(String msg){ new Alert(Alert.AlertType.ERROR, msg).show(); }
 }
+
