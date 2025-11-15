@@ -98,6 +98,14 @@ public class CashierController {
         MovementViewController controller = loader.getController();
         layoutCashier.getChildren().setAll(movementsView);
     }
+    @FXML
+    private void showCheckMovements() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/MovementView.fxml"));
+        BorderPane movementsView = loader.load();
+
+        MovementViewController controller = loader.getController();
+        layoutCashier.getChildren().setAll(movementsView);
+    }
 
     @FXML private void onLogOut () throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/proyectofinal/View/Login.fxml"));
