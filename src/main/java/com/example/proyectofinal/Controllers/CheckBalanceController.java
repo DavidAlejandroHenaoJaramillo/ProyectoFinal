@@ -1,54 +1,49 @@
 package com.example.proyectofinal.Controllers;
 
-import com.example.proyectofinal.Models.AccountArrange;
-import com.example.proyectofinal.Models.Account;
+import com.example.proyectofinal.Models.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class CheckBalanceController {
+    @FXML private ComboBox<String> cmbAccounts;
+    @FXML private Button btnCheckBalance;
+    @FXML private Label txtBalance;
 
-    @FXML
-    private TextField txtNumberAccount;
+    private AccountArrange accountArrange;
+    private Client client;
 
-    @FXML
-    private Button btnCheckBalance;
+    public void setAccountArrange(AccountArrange accountArrange) {
+        this.accountArrange = accountArrange;
+        if (this.accountArrange != null) this.accountArrange.loadAccounts();
+        tryLoadClientAccounts();
+    }
 
-    @FXML
-    private Label txtBalance;
-
-    private final AccountArrange accountArrange = new AccountArrange();
+    public void setClient(Client client) {
+        this.client = client;
+        tryLoadClientAccounts();
+    }
 
     @FXML
     public void initialize() {
-        accountArrange.loadAccounts();
-        btnCheckBalance.setOnAction(event -> checkBalance());
+        if (btnCheckBalance != null) btnCheckBalance.setOnAction(e -> checkBalance());
+    }
+
+    private void tryLoadClientAccounts() {
+        if (cmbAccounts == null) return;
+        cmbAccounts.getItems().clear();
+        if (this.client == null || this.accountArrange == null) return;
+
+        for (Account acc : accountArrange.getClientAccounts(client.getId())) {
+            cmbAccounts.getItems().add(acc.getAccountNumber());
+        }
     }
 
     private void checkBalance() {
-        String number = txtNumberAccount.getText().trim();
-
-        if (number.isEmpty()) {
-            showError("Please enter an account number.");
-            return;
-        }
-
-        Account account = accountArrange.getAccount(number);
-
-        if (account == null) {
-            showError("The account number does not exist.");
-            return;
-        }
-
-        txtBalance.setText(String.format("%.2f", account.getBalance()));
+        String selected = cmbAccounts.getValue();
+        if (selected == null || selected.trim().isEmpty()) { showError("Please select an account."); return; }
+        Account acc = accountArrange.getAccount(selected);
+        if (acc == null) { showError("Account not found."); return; }
+        txtBalance.setText(String.format("%.2f", acc.getBalance()));
     }
-
-    private void showError(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setHeaderText("Error");
-        alert.setContentText(msg);
-        alert.show();
-    }
+    private void showError(String msg){ new Alert(Alert.AlertType.ERROR, msg).showAndWait(); }
 }

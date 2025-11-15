@@ -12,17 +12,14 @@
         <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #468BB0;">
             <children>
 
-                <!-- ORIGIN ACCOUNT -->
                 <TextField fx:id="txtOriginAccount" layoutX="63.0" layoutY="142.0"
                            prefHeight="26.0" prefWidth="458.0"
                            promptText="Origin account" />
 
-                <!-- DESTINATION ACCOUNT -->
                 <TextField fx:id="txtDestinationAccount" layoutX="67.0" layoutY="213.0"
                            prefHeight="26.0" prefWidth="458.0"
                            promptText="Destination account number" />
 
-                <!-- AMOUNT -->
                 <TextField fx:id="txtAmount" layoutX="67.0" layoutY="278.0"
                            prefHeight="26.0" prefWidth="458.0"
                            promptText="Amount" />
@@ -39,7 +36,6 @@
                     <font><Font name="Berlin Sans FB" size="32.0"/></font>
                 </Label>
 
-                <!-- TRANSFER BUTTON -->
                 <Button fx:id="btnTransfer" alignment="CENTER" layoutX="131.0" layoutY="332.0"
                         mnemonicParsing="false"
                         style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;"
@@ -47,7 +43,6 @@
                     <font><Font size="16.0"/></font>
                 </Button>
 
-                <!-- CANCEL BUTTON -->
                 <Button fx:id="btnCancelTransfer" alignment="CENTER" layoutX="367.0" layoutY="332.0"
                         mnemonicParsing="false"
                         style="-fx-background-color: #196991; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: white;"
