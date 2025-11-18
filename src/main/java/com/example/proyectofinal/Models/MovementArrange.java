@@ -27,7 +27,7 @@ public class MovementArrange {
     public void addMovement(String accountNumber, String type, String relatedAccount, double amount) {
 
         Movement m = new Movement(
-                java.time.LocalDate.now().toString(),  // Fecha actual
+                java.time.LocalDate.now().toString(),
                 type,
                 relatedAccount,
                 amount,
